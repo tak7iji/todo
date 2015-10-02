@@ -45,3 +45,4 @@ Temporary Items
 .idea/*
 target/*
 *.iml
+/target/
