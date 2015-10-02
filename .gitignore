@@ -43,6 +43,9 @@ Temporary Items
 .apdisk
 
 .idea/*
-target/*
+target
 *.iml
-/target/
+
+.project
+.settings
+.classpath
