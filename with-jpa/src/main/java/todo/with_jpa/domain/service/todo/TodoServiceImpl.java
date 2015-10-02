@@ -1,5 +1,8 @@
 package todo.with_jpa.domain.service.todo;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.terasoluna.gfw.common.exception.BusinessException;
@@ -21,7 +24,8 @@ import java.util.UUID;
 @Transactional
 public class TodoServiceImpl implements TodoService {
 
-    private static final long MAX_UNFINISHED_COUNT = 5;
+	@Value("${max.unfinished.count:5}")
+	private long MAX_UNFINISHED_COUNT;
 
     @Inject
     TodoRepository todoRepository;
@@ -90,4 +94,11 @@ public class TodoServiceImpl implements TodoService {
         Todo todo = findOne(todoId);
         todoRepository.delete(todo);
     }
+
+	@Override
+    @Transactional(readOnly = true)
+	public Page<Todo> findAll(Pageable pageable) {
+		// TODO Auto-generated method stub
+		return todoRepository.findAll(pageable);
+	}
 }

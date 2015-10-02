@@ -2,11 +2,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Todo List</title>
+<title><spring:message code="title.todo.list"/></title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css" type="text/css">
 </head>
 <body>
-    <h1>Todo List</h1>
+    <h1><spring:message code="title.todo.list"/></h1>
     <div id="todoForm">
         <t:messagesPanel />
 
@@ -15,7 +15,7 @@
             method="post" modelAttribute="todoForm">
             <form:input path="todoTitle" />
             <form:errors path="todoTitle" cssClass="text-error" />
-            <form:button>Create Todo</form:button>
+            <form:button><spring:message code="label.td.list.create"/></form:button>
         </form:form>
     </div>
     <hr />
@@ -38,7 +38,7 @@
                                 cssStyle="display: inline-block;">
                                 <form:hidden path="todoId"
                                     value="${f:h(todo.todoId)}" />
-                                <form:button>Finish</form:button>
+                                <form:button><spring:message code="label.td.list.finish"/></form:button>
                             </form:form>
                          </c:otherwise>
                     </c:choose>
@@ -48,7 +48,7 @@
                         cssStyle="display: inline-block;">
                         <form:hidden path="todoId"
                             value="${f:h(todo.todoId)}" />
-                        <form:button>Delete</form:button>
+                        <form:button><spring:message code="label.td.list.delete"/></form:button>
                     </form:form>
                 </li>
             </c:forEach>

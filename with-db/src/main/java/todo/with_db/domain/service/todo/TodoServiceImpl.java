@@ -1,5 +1,10 @@
 package todo.with_db.domain.service.todo;
 
+import org.apache.ibatis.session.RowBounds;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.terasoluna.gfw.common.exception.BusinessException;
@@ -11,7 +16,9 @@ import todo.with_db.domain.repository.todo.TodoRepository;
 
 import javax.inject.Inject;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -21,7 +28,8 @@ import java.util.UUID;
 @Transactional
 public class TodoServiceImpl implements TodoService {
 
-    private static final long MAX_UNFINISHED_COUNT = 5;
+	@Value("${max.unfinished.count:5}")
+	private long MAX_UNFINISHED_COUNT;
 
     @Inject
     TodoRepository todoRepository;
@@ -41,8 +49,17 @@ public class TodoServiceImpl implements TodoService {
 
     @Override
     @Transactional(readOnly = true)
-    public Collection<Todo> findAll() {
-        return todoRepository.findAll();
+    public Page<Todo> findAll(Pageable pageable) {
+    	long total = todoRepository.countAll();
+        List<Todo> todos;
+        if (0 < total) {
+            RowBounds rowBounds = new RowBounds(pageable.getOffset(),
+                pageable.getPageSize());
+            todos = todoRepository.findAll(rowBounds);
+        } else {
+            todos = Collections.emptyList();
+        }
+        return new PageImpl<Todo>(todos, pageable, total);
     }
 
     @Override

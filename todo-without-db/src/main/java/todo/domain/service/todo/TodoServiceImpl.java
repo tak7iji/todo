@@ -1,5 +1,6 @@
 package todo.domain.service.todo;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.terasoluna.gfw.common.exception.BusinessException;
@@ -21,7 +22,8 @@ import java.util.UUID;
 @Transactional
 public class TodoServiceImpl implements TodoService {
 
-    private static final long MAX_UNFINISHED_COUNT = 5;
+	@Value("${max.unfinished.count:5}")
+	private long MAX_UNFINISHED_COUNT;
 
     @Inject
     TodoRepository todoRepository;
@@ -31,9 +33,7 @@ public class TodoServiceImpl implements TodoService {
         if (todo == null) {
 
             ResultMessages messages = ResultMessages.error();
-            messages.add(ResultMessage
-                    .fromText("[E404] The requested Todo is not found. (id="
-                            + todoId + ")"));
+            messages.add("e.td.sv.4404", todoId);
             throw new ResourceNotFoundException(messages);
         }
         return todo;
@@ -50,9 +50,7 @@ public class TodoServiceImpl implements TodoService {
         long unfinishedCount = todoRepository.countByFinished(false);
         if (unfinishedCount >= MAX_UNFINISHED_COUNT) {
             ResultMessages messages = ResultMessages.error();
-            messages.add(ResultMessage
-                    .fromText("[E001] The count of un-finished Todo must not be over "
-                            + MAX_UNFINISHED_COUNT + "."));
+            messages.add("e.td.sv.2001", MAX_UNFINISHED_COUNT);
             throw new BusinessException(messages);
         }
 
@@ -77,9 +75,7 @@ public class TodoServiceImpl implements TodoService {
         Todo todo = findOne(todoId);
         if (todo.isFinished()) {
             ResultMessages messages = ResultMessages.error();
-            messages.add(ResultMessage
-                    .fromText("[E002] The requested Todo is already finished. (id="
-                            + todoId + ")"));
+            messages.add("e.td.sv.2002", todoId);
             throw new BusinessException(messages);
         }
         todo.setFinished(true);

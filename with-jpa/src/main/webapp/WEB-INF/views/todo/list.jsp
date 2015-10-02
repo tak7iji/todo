@@ -4,6 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Todo List</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css" type="text/css">
+<link rel="stylesheet"
+    href="${pageContext.request.contextPath}/resources/vendor/bootstrap-3.0.0/css/bootstrap.css"
+    type="text/css" media="screen, projection">
 </head>
 <body>
     <h1>Todo List</h1>
@@ -21,7 +24,7 @@
     <hr />
     <div id="todoList">
         <ul>
-            <c:forEach items="${todos}" var="todo">
+            <c:forEach items="${todos.content}" var="todo">
                 <li>
                     <c:choose>
                         <c:when test="${todo.finished}">
@@ -54,5 +57,6 @@
             </c:forEach>
         </ul>
     </div>
+    <t:pagination page="${todos}" outerElementClass="pagination"/>
 </body>
 </html>

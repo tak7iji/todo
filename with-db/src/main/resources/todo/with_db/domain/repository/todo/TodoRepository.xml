@@ -25,6 +25,15 @@
     ]]>
     </select>
 
+    <select id="countAll" resultType="_long">
+    <![CDATA[
+        SELECT
+            count(*)
+        FROM
+            todo
+    ]]>
+    </select>
+
     <select id="findAll" resultMap="todoResultMap">
     <![CDATA[
         SELECT
