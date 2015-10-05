@@ -4,6 +4,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><spring:message code="title.todo.list"/></title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css" type="text/css">
+<script>
+function clickButton(button) {
+    button.disabled=true;
+    button.parentNode.submit();
+}
+</script>
 </head>
 <body>
     <h1><spring:message code="title.todo.list"/></h1>
@@ -15,7 +21,7 @@
             method="post" modelAttribute="todoForm">
             <form:input path="todoTitle" />
             <form:errors path="todoTitle" cssClass="text-error" />
-            <form:button><spring:message code="label.td.list.create"/></form:button>
+            <form:button id="create" onclick="clickButton(this)"><spring:message code="label.td.list.create"/></form:button>
         </form:form>
     </div>
     <hr />
@@ -38,7 +44,7 @@
                                 cssStyle="display: inline-block;">
                                 <form:hidden path="todoId"
                                     value="${f:h(todo.todoId)}" />
-                                <form:button><spring:message code="label.td.list.finish"/></form:button>
+                                <form:button onclick="clickButton(this)"><spring:message code="label.td.list.finish"/></form:button>
                             </form:form>
                          </c:otherwise>
                     </c:choose>
@@ -48,7 +54,7 @@
                         cssStyle="display: inline-block;">
                         <form:hidden path="todoId"
                             value="${f:h(todo.todoId)}" />
-                        <form:button><spring:message code="label.td.list.delete"/></form:button>
+                        <form:button onclick="clickButton(this)"><spring:message code="label.td.list.delete"/></form:button>
                     </form:form>
                 </li>
             </c:forEach>
