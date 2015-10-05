@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css" type="text/css">
 <script>
 function clickButton(button) {
-    button.disabled=false;
+    button.disabled=true;
     button.parentNode.submit();
 }
 </script>
@@ -14,13 +14,8 @@ function clickButton(button) {
 <body>
     <h1><spring:message code="title.todo.list"/></h1>
     <div id="todoForm">
-        <form:form
-           action="${pageContext.request.contextPath}/todo/confirm"
-            method="post" modelAttribute="todoForm">
-            ${todoForm.todoTitle}
-            <input type="hidden" name="todoTitle" value="${todoForm.todoTitle}"/>
-            <form:button onclick="clickButton(this)"><spring:message code="label.td.list.confirm"/></form:button>
-        </form:form>
+        <t:messagesPanel />
+        <a href="<spring:url value="/todo/list" />">Back</a>
     </div>
     <hr />
 </body>

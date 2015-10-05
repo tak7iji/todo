@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css" type="text/css">
 <script>
 function clickButton(button) {
-    button.disabled=true;
+    button.disabled=false;
     button.parentNode.submit();
 }
 </script>

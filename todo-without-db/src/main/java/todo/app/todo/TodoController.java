@@ -47,7 +47,7 @@ public class TodoController {
 		return form;
 	}
 
-	@TransactionTokenCheck(value="create", type=TransactionTokenType.BEGIN)
+//	@TransactionTokenCheck(value="create", type=TransactionTokenType.BEGIN)
 	@RequestMapping(value = "list")
 	public String list(Model model) {
 		Collection<Todo> todos = todoService.findAll();
@@ -55,7 +55,7 @@ public class TodoController {
 		return "todo/list";
 	}
 
-	@TransactionTokenCheck(value="create", type=TransactionTokenType.IN)
+	@TransactionTokenCheck(value="create", type=TransactionTokenType.BEGIN)
 	@RequestMapping(value = "create", method = RequestMethod.POST)
 	public String create(
 	        @Validated({ Default.class,
@@ -78,7 +78,7 @@ public class TodoController {
 
 		// attributes.addFlashAttribute(ResultMessages.success().add("i.td.ct.0001"));
 		// return "redirect:/todo/list";
-		return "/todo/confirm";
+		return "todo/confirm";
 	}
 
 	@TransactionTokenCheck(value="create", type=TransactionTokenType.IN)
@@ -97,7 +97,12 @@ public class TodoController {
 
 		logger.info("Add new Todo.");
 		attributes.addFlashAttribute(ResultMessages.success().add("i.td.ct.0001"));
-		return "redirect:/todo/list";
+		return "redirect:/todo/complete";
+	}
+	
+	@RequestMapping(value = "complete", method = RequestMethod.GET)
+	public String complete(Model model) {
+		return "todo/complete";
 	}
 
 	@RequestMapping(value = "finish", method = RequestMethod.POST)
