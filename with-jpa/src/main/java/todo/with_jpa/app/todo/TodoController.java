@@ -52,7 +52,7 @@ public class TodoController {
     		Model model) {
         Page<Todo> todos = todoService.findAll(pageable);
         logger.info("list:page={}", pageable.getPageNumber());
-        model.addAttribute("page", todos);
+        model.addAttribute("todos", todos);
         return "todo/list";
     }
 

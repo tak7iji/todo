@@ -18,14 +18,14 @@
             method="post" modelAttribute="todoForm">
             <form:input path="todoTitle" />
             <form:errors path="todoTitle" cssClass="text-error" />
-            <input type="hidden" name="page" value="${page.totalElements % page.size == 0 ? page.number + 1 : page.number}"/>
+            <input type="hidden" name="page" value="${todos.totalElements % todos.size == 0 ? todos.number + 1 : todos.number}"/>
             <form:button>Create Todo</form:button>
         </form:form>
     </div>
     <hr />
     <div id="todoList">
         <ul>
-            <c:forEach items="${page.content}" var="todo">
+            <c:forEach items="${todos.content}" var="todo">
                 <li>
                     <c:choose>
                         <c:when test="${todo.finished}">
@@ -42,7 +42,7 @@
                                 cssStyle="display: inline-block;">
                                 <form:hidden path="todoId"
                                     value="${f:h(todo.todoId)}" />
-                                <input type="hidden" name="page" value="${page.number}"/>
+                                <input type="hidden" name="page" value="${todos.number}"/>
                                 <form:button>Finish</form:button>
                             </form:form>
                          </c:otherwise>
@@ -53,13 +53,13 @@
                         cssStyle="display: inline-block;">
                         <form:hidden path="todoId"
                             value="${f:h(todo.todoId)}" />
-                        <input type="hidden" name="page" value="${(page.totalElements-1) % page.size == 0 ? ((page.number > 0) ? (page.number) - 1 : page.number) : page.number}"/>
+                        <input type="hidden" name="page" value="${(todos.totalElements-1) % todos.size == 0 ? ((todos.number > 0) ? (todos.number) - 1 : todos.number) : todos.number}"/>
                         <form:button>Delete</form:button>
                     </form:form>
                 </li>
             </c:forEach>
         </ul>
     </div>
-    <t:pagination page="${page}" outerElementClass="pagination"/>
+    <t:pagination page="${todos}" outerElementClass="pagination"/>
 </body>
 </html>
