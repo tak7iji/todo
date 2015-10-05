@@ -1,8 +1,10 @@
 package todo.domain.service.todo;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.terasoluna.gfw.common.date.jodatime.JodaTimeDateFactory;
 import org.terasoluna.gfw.common.exception.BusinessException;
 import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
 import org.terasoluna.gfw.common.message.ResultMessage;
@@ -28,6 +30,9 @@ public class TodoServiceImpl implements TodoService {
     @Inject
     TodoRepository todoRepository;
 
+    @Inject
+    JodaTimeDateFactory dateFactory;
+    
     public Todo findOne(String todoId) {
         Todo todo = todoRepository.findOne(todoId);
         if (todo == null) {
@@ -54,9 +59,8 @@ public class TodoServiceImpl implements TodoService {
             throw new BusinessException(messages);
         }
 
-        // (9)
         String todoId = UUID.randomUUID().toString();
-        Date createdAt = new Date();
+        Date createdAt = dateFactory.newDateTime().toDate();
 
         todo.setTodoId(todoId);
         todo.setCreatedAt(createdAt);

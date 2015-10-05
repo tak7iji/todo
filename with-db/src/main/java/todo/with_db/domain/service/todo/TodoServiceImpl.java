@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.terasoluna.gfw.common.date.jodatime.JodaTimeDateFactory;
 import org.terasoluna.gfw.common.exception.BusinessException;
 import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
 import org.terasoluna.gfw.common.message.ResultMessage;
@@ -15,7 +16,6 @@ import todo.with_db.domain.model.Todo;
 import todo.with_db.domain.repository.todo.TodoRepository;
 
 import javax.inject.Inject;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -34,6 +34,9 @@ public class TodoServiceImpl implements TodoService {
     @Inject
     TodoRepository todoRepository;
 
+    @Inject
+    JodaTimeDateFactory dateFactory;
+    
     public Todo findOne(String todoId) {
         Todo todo = todoRepository.findOne(todoId);
         if (todo == null) {
@@ -73,9 +76,9 @@ public class TodoServiceImpl implements TodoService {
             throw new BusinessException(messages);
         }
 
-        // (9)
         String todoId = UUID.randomUUID().toString();
-        Date createdAt = new Date();
+        Date createdAt = dateFactory.newDateTime().toDate();
+        
 
         todo.setTodoId(todoId);
         todo.setCreatedAt(createdAt);
