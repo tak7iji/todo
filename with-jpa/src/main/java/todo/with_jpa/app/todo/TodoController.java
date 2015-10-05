@@ -1,6 +1,8 @@
 package todo.with_jpa.app.todo;
 
 import org.dozer.Mapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -20,9 +22,10 @@ import todo.with_jpa.app.todo.TodoForm.TodoDelete;
 import todo.with_jpa.domain.model.Todo;
 import todo.with_jpa.domain.service.todo.TodoService;
 
+import java.util.Map;
+
 import javax.inject.Inject;
 import javax.validation.groups.Default;
-import java.util.Collection;
 
 /**
  * Created by mash on 2015/10/01.
@@ -30,6 +33,8 @@ import java.util.Collection;
 @Controller
 @RequestMapping("todo")
 public class TodoController {
+	private static final Logger logger = LoggerFactory.getLogger(TodoController.class);
+	
     @Inject
     TodoService todoService;
 
@@ -46,7 +51,8 @@ public class TodoController {
     public String list(@PageableDefault(5) Pageable pageable, 
     		Model model) {
         Page<Todo> todos = todoService.findAll(pageable);
-        model.addAttribute("todos", todos);
+        logger.info("list:page={}", pageable.getPageNumber());
+        model.addAttribute("page", todos);
         return "todo/list";
     }
 
@@ -71,6 +77,8 @@ public class TodoController {
 
         attributes.addFlashAttribute(ResultMessages.success().add(
                 ResultMessage.fromText("Created successfully!")));
+        logger.info("create:page={}", pageable.getPageNumber());
+        attributes.addAttribute("page", pageable.getPageNumber());
         return "redirect:/todo/list";
     }
 
@@ -94,6 +102,7 @@ public class TodoController {
 
         attributes.addFlashAttribute(ResultMessages.success().add(
                 ResultMessage.fromText("Finished successfully!")));
+        attributes.addAttribute("page", pageable.getPageNumber());
         return "redirect:/todo/list";
     }
     
@@ -118,6 +127,7 @@ public class TodoController {
 
         attributes.addFlashAttribute(ResultMessages.success().add(
                 ResultMessage.fromText("Deleted successfully!")));
+        attributes.addAttribute("page", pageable.getPageNumber());
         return "redirect:/todo/list";
     }
 

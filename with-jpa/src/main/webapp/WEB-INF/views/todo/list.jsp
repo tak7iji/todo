@@ -18,13 +18,14 @@
             method="post" modelAttribute="todoForm">
             <form:input path="todoTitle" />
             <form:errors path="todoTitle" cssClass="text-error" />
+            <input type="hidden" name="page" value="${page.totalElements % page.size == 0 ? page.number + 1 : page.number}"/>
             <form:button>Create Todo</form:button>
         </form:form>
     </div>
     <hr />
     <div id="todoList">
         <ul>
-            <c:forEach items="${todos.content}" var="todo">
+            <c:forEach items="${page.content}" var="todo">
                 <li>
                     <c:choose>
                         <c:when test="${todo.finished}">
@@ -41,6 +42,7 @@
                                 cssStyle="display: inline-block;">
                                 <form:hidden path="todoId"
                                     value="${f:h(todo.todoId)}" />
+                                <input type="hidden" name="page" value="${page.number}"/>
                                 <form:button>Finish</form:button>
                             </form:form>
                          </c:otherwise>
@@ -51,12 +53,13 @@
                         cssStyle="display: inline-block;">
                         <form:hidden path="todoId"
                             value="${f:h(todo.todoId)}" />
+                        <input type="hidden" name="page" value="${(page.totalElements-1) % page.size == 0 ? ((page.number > 0) ? (page.number) - 1 : page.number) : page.number}"/>
                         <form:button>Delete</form:button>
                     </form:form>
                 </li>
             </c:forEach>
         </ul>
     </div>
-    <t:pagination page="${todos}" outerElementClass="pagination"/>
+    <t:pagination page="${page}" outerElementClass="pagination"/>
 </body>
 </html>
