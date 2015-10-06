@@ -3,10 +3,8 @@ package app;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.dozer.DozerBeanMapper;
-import org.dozer.Mapper;
-import org.dozer.spring.DozerBeanMapperFactoryBean;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
+import org.springframework.boot.context.embedded.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
@@ -22,8 +20,10 @@ import org.terasoluna.gfw.web.logging.mdc.XTrackMDCPutFilter;
     			 "classpath:META-INF/spring/spring-mvc.xml"})
 public class AppConfig extends WebMvcConfigurerAdapter {
 	@Bean
-	public HttpSessionEventLoggingListener httpSessionEventLoggingListener() {
-		return new HttpSessionEventLoggingListener();
+	public ServletListenerRegistrationBean<HttpSessionEventLoggingListener>  httpSessionEventLoggingListener() {
+		ServletListenerRegistrationBean<HttpSessionEventLoggingListener> listenerRegBean = new ServletListenerRegistrationBean<HttpSessionEventLoggingListener>();
+		listenerRegBean.setListener(new HttpSessionEventLoggingListener());
+		return listenerRegBean;
 	}
 	
 	@Bean

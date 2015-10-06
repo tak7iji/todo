@@ -54,7 +54,6 @@ public class TodoController {
 //	@TransactionTokenCheck(value="create", type=TransactionTokenType.BEGIN)
 	@RequestMapping(value = "list")
 	public String list(Model model) {
-		logger.info("Start list");
 		Collection<Todo> todos = todoService.findAll();
 		model.addAttribute("todos", todos);
 		return "todo/list";

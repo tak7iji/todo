@@ -8,7 +8,6 @@ import org.springframework.context.annotation.ComponentScan;
 
 
 @SpringBootApplication
-//@EnableAutoConfiguration(exclude=SecurityAutoConfiguration.class)
 @ComponentScan({"app", "todo"})
 public class BootApplication {
 
