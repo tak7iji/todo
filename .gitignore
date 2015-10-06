@@ -49,3 +49,5 @@ target
 .project
 .settings
 .classpath
+log
+.springBeans

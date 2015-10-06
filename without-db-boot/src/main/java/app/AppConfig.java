@@ -9,18 +9,21 @@ import org.dozer.spring.DozerBeanMapperFactoryBean;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.terasoluna.gfw.web.logging.HttpSessionEventLoggingListener;
 import org.terasoluna.gfw.web.logging.mdc.MDCClearFilter;
 import org.terasoluna.gfw.web.logging.mdc.XTrackMDCPutFilter;
 
 @Configuration
+@ImportResource({"classpath:META-INF/spring/applicationContext.xml",
+    			 "classpath:META-INF/spring/spring-mvc.xml"})
 public class AppConfig extends WebMvcConfigurerAdapter {
 	@Bean
-	public Mapper beanMapper() throws Exception {
-		DozerBeanMapperFactoryBean beanMapper = new DozerBeanMapperFactoryBean();
-		return beanMapper.getObject();
+	public HttpSessionEventLoggingListener httpSessionEventLoggingListener() {
+		return new HttpSessionEventLoggingListener();
 	}
 	
 	@Bean
