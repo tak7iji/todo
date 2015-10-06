@@ -18,7 +18,7 @@
             method="post" modelAttribute="todoForm">
             <form:input path="todoTitle" />
             <form:errors path="todoTitle" cssClass="text-error" />
-            <input type="hidden" name="page" value="${todos.totalElements % todos.size == 0 ? todos.number + 1 : todos.number}"/>
+            <input type="hidden" name="page" value="${(todos.totalElements % todos.size == 0 && todos.totalElements > 0) ? todos.number + 1 : todos.number}"/>
             <form:button>Create Todo</form:button>
         </form:form>
     </div>
