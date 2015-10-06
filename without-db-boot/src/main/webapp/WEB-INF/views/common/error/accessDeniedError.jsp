@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@ include file="/WEB-INF/views/common/include.jsp" %>
 <html>
 <head>
 <meta charset="utf-8">

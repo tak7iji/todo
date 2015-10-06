@@ -23,6 +23,7 @@ import org.terasoluna.gfw.web.logging.mdc.XTrackMDCPutFilter;
 @ImportResource({"classpath:META-INF/spring/applicationContext.xml",
     			 "classpath:META-INF/spring/spring-mvc.xml"})
 public class AppConfig extends WebMvcConfigurerAdapter {
+	
 	@Bean
 	public EmbeddedServletContainerCustomizer containerCustomizer(){
 	    return new CustomizerImpl();
