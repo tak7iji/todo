@@ -6,6 +6,8 @@ import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
+import org.apache.catalina.core.ApplicationContext;
+import org.apache.catalina.core.ApplicationContextFacade;
 import org.apache.tomcat.util.descriptor.web.JspPropertyGroup;
 import org.apache.tomcat.util.descriptor.web.JspPropertyGroupDescriptorImpl;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
@@ -122,8 +124,8 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	        	jpg.addIncludePrelude("/WEB-INF/views/common/include.jsp");
 	        	jpg.setPageEncoding("UTF-8");
 	        	JspPropertyGroupDescriptorImpl jpgd = new JspPropertyGroupDescriptorImpl(jpg);
-	        	
-	            System.out.println("AppConfig: "+servletContext.getJspConfigDescriptor());
+	            System.out.println("AppConfig: "+servletContext.getContextPath());
+	            System.out.println("AppConfig: "+servletContext);
 	        }
 	    };
 	}
