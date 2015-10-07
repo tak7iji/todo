@@ -57,6 +57,6 @@
             </c:forEach>
         </ul>
     </div>
-    <t:pagination page="${todos}" outerElementClass="pagination"/>
+    <t:pagination page="${todos}" outerElementClass="pagination" disabledClass="invisible" pathTmpl="list" />
 </body>
 </html>

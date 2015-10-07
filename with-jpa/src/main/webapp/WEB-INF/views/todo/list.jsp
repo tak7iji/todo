@@ -60,10 +60,6 @@
             </c:forEach>
         </ul>
     </div>
-    <t:pagination page="${todos}" outerElementClass="pagination" 
-                  firstLinkText="${todos.number == 0 ? '' : '<<'}" 
-                  previousLinkText="${todos.number == 0 ? '' : '<'}" 
-                  nextLinkText="${todos.number == (Math.ceil(todos.totalElements / todos.size) - 1) ? '' : '>'}" 
-                  lastLinkText="${todos.number == (Math.ceil(todos.totalElements / todos.size) - 1) ? '' : '>>'}" />
+    <t:pagination page="${todos}" outerElementClass="pagination" disabledClass="invisible" />
 </body>
 </html>
