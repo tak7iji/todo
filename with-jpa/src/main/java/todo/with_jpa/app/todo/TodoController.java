@@ -9,6 +9,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.terasoluna.gfw.common.exception.BusinessException;
 import org.terasoluna.gfw.common.message.ResultMessage;
 import org.terasoluna.gfw.common.message.ResultMessages;
+import org.terasoluna.gfw.common.message.StandardResultMessageType;
 
 import todo.with_jpa.app.todo.TodoForm.TodoDelete;
 import todo.with_jpa.domain.model.Todo;
@@ -55,6 +57,12 @@ public class TodoController {
         model.addAttribute("todos", todos);
         return "todo/list";
     }
+    
+    @RequestMapping(value = "create", method = RequestMethod.GET)
+    public String create(@PageableDefault(5) Pageable pageable, 
+    		Model model) {
+    	return list(pageable, model);
+    }
 
     @RequestMapping(value = "create", method = RequestMethod.POST)
     public String create(@Validated({ Default.class, TodoForm.TodoCreate.class }) TodoForm todoForm,
@@ -63,7 +71,13 @@ public class TodoController {
                          Model model, RedirectAttributes attributes) {
 
         if (bindingResult.hasErrors()) {
-            return list(pageable, model);
+//            return list(pageable, model);
+        	ResultMessages rms = new ResultMessages(StandardResultMessageType.ERROR);
+        	for(FieldError fe : bindingResult.getFieldErrors()) {
+        		rms.add(ResultMessage.fromText(fe.getDefaultMessage()));
+        	}
+        	attributes.addFlashAttribute(rms);
+        	return "redirect:/todo/list";
         }
 
         Todo todo = beanMapper.map(todoForm, Todo.class);
@@ -71,8 +85,10 @@ public class TodoController {
         try {
             todoService.create(todo);
         } catch (BusinessException e) {
-            model.addAttribute(e.getResultMessages());
-            return list(pageable, model);
+//            model.addAttribute(e.getResultMessages());
+//            return list(pageable, model);
+        	attributes.addFlashAttribute(e.getResultMessages());
+        	return "redirect:/todo/list";
         }
 
         attributes.addFlashAttribute(ResultMessages.success().add(
