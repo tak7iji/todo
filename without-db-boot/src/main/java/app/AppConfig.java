@@ -3,10 +3,16 @@ package app;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+
+import org.apache.tomcat.util.descriptor.web.JspPropertyGroup;
+import org.apache.tomcat.util.descriptor.web.JspPropertyGroupDescriptorImpl;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.context.embedded.ErrorPage;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
+import org.springframework.boot.context.embedded.ServletContextInitializer;
 import org.springframework.boot.context.embedded.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -105,4 +111,20 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	    return filterRegBean;
 	}
 
+	@Bean
+	public ServletContextInitializer initializer() {
+	    return new ServletContextInitializer() {
+
+	        @Override
+	        public void onStartup(ServletContext servletContext) throws ServletException {
+	        	JspPropertyGroup jpg = new JspPropertyGroup();
+	        	jpg.addUrlPattern("*.jsp");
+	        	jpg.addIncludePrelude("/WEB-INF/views/common/include.jsp");
+	        	jpg.setPageEncoding("UTF-8");
+	        	JspPropertyGroupDescriptorImpl jpgd = new JspPropertyGroupDescriptorImpl(jpg);
+	        	
+	            System.out.println("AppConfig: "+servletContext.getJspConfigDescriptor());
+	        }
+	    };
+	}
 }
