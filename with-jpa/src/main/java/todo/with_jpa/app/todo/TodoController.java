@@ -56,6 +56,7 @@ public class TodoController {
         return "todo/list";
     }
     
+    // このメソッドを作らなくても、<t:pagenation>にpathTmplでパスを指定すればよい（今回の場合は"list"を指定すればよい）
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public String create(@PageableDefault(5) Pageable pageable, 
     		Model model) {
