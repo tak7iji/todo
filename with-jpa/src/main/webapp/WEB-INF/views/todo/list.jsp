@@ -18,7 +18,7 @@
             method="post" modelAttribute="todoForm">
             <form:input path="todoTitle" />
             <form:errors path="todoTitle" cssClass="text-error" />
-            <input type="hidden" name="page" value="${(todos.totalElements % todos.size == 0 && todos.totalElements > 0) ? todos.number + 1 : todos.number}"/>
+            <input type="hidden" name="page" value="${Double.valueOf(Math.ceil((todos.totalElements+1) / todos.size)).intValue() - 1}"/>
             <form:button>Create Todo</form:button>
         </form:form>
     </div>
@@ -60,6 +60,10 @@
             </c:forEach>
         </ul>
     </div>
-    <t:pagination page="${todos}" outerElementClass="pagination"/>
+    <t:pagination page="${todos}" outerElementClass="pagination" 
+                  firstLinkText="${todos.number == 0 ? '' : '<<'}" 
+                  previousLinkText="${todos.number == 0 ? '' : '<'}" 
+                  nextLinkText="${todos.number == (Math.ceil(todos.totalElements / todos.size) - 1) ? '' : '>'}" 
+                  lastLinkText="${todos.number == (Math.ceil(todos.totalElements / todos.size) - 1) ? '' : '>>'}" />
 </body>
 </html>
