@@ -24,8 +24,6 @@ import todo.with_jpa.app.todo.TodoForm.TodoDelete;
 import todo.with_jpa.domain.model.Todo;
 import todo.with_jpa.domain.service.todo.TodoService;
 
-import java.util.Map;
-
 import javax.inject.Inject;
 import javax.validation.groups.Default;
 
