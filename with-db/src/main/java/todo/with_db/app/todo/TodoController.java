@@ -121,8 +121,7 @@ public class TodoController {
 
     @RequestMapping(value = "deleteAll", method = RequestMethod.POST)
     public String deleteAll(
-            @Validated({ Default.class, TodoDelete.class }) TodoForm form,
-            BindingResult bindingResult, 
+            TodoForm form,
             @PageableDefault(5) Pageable pageable,
             Model model,
             RedirectAttributes attributes) {
