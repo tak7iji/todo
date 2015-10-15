@@ -23,7 +23,7 @@
         <sec:authorize access="hasRole('ROLE_ADMIN')">
             <form:form
                action="${pageContext.request.contextPath}/todo/deleteAll"
-                method="post">
+                method="post" modelAttribute="todoForm">
                 <form:button>Delete All Todo</form:button>
             </form:form>
         </sec:authorize>

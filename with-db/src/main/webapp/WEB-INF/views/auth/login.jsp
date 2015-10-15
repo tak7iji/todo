@@ -22,7 +22,7 @@
                 <tr>
                     <td><label for="j_username">User:</label></td>
                     <td><input type="text" id="j_username"
-                        name="j_username" value='demo'>(demo)</td><!-- (4) -->
+                        name="j_username" value='user1'>(demo)</td><!-- (4) -->
                 </tr>
                 <tr>
                     <td><label for="j_password">Password:</label></td>

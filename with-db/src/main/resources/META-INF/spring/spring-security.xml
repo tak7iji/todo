@@ -28,7 +28,7 @@
             logout-success-url="/"
             delete-cookies="JSESSIONID" />
         <sec:intercept-url pattern="/login*" access="permitAll" />
-        <sec:intercept-url pattern="/todo/*" access="hasRole('ROLE_ADMIN')" />
+        <sec:intercept-url pattern="/todo/*" access="hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')" />
         <sec:intercept-url pattern="/**" access="isAuthenticated()" />
     </sec:http>
 
