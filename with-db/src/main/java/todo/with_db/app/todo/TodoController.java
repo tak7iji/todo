@@ -119,4 +119,21 @@ public class TodoController {
         return "redirect:/todo/list";
     }
 
+    @RequestMapping(value = "deleteAll", method = RequestMethod.POST)
+    public String deleteAll(
+            @PageableDefault(5) Pageable pageable,
+            Model model,
+            RedirectAttributes attributes) {
+
+        try {
+            todoService.deleteAll();
+        } catch (BusinessException e) {
+            model.addAttribute(e.getResultMessages());
+            return list(pageable, model);
+        }
+
+        attributes.addFlashAttribute(ResultMessages.success().add(
+                ResultMessage.fromText("Deleted all todos successfully!")));
+        return "redirect:/todo/list";
+    }
 }

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.terasoluna.gfw.common.date.jodatime.JodaTimeDateFactory;
@@ -115,4 +116,11 @@ public class TodoServiceImpl implements TodoService {
         Todo todo = findOne(todoId);
         todoRepository.delete(todo);
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Override
+	public void deleteAll() {
+		todoRepository.deleteAll();
+		
+	}
 }

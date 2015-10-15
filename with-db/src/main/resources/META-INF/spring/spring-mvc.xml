@@ -68,6 +68,8 @@
         <mvc:jsp prefix="/WEB-INF/views/" />
     </mvc:view-resolvers>
 
+    <mvc:view-controller path="/login" view-name="auth/login" />
+    
     <bean id="requestDataValueProcessor"
         class="org.terasoluna.gfw.web.mvc.support.CompositeRequestDataValueProcessor">
         <constructor-arg>

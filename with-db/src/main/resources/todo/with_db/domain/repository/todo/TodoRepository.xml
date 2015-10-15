@@ -86,6 +86,13 @@
     ]]>
     </delete>
 
+    <delete id="deleteAll">
+    <![CDATA[
+        DELETE FROM
+            todo
+    ]]>
+    </delete>
+
     <select id="countByFinished" parameterType="Boolean"
         resultType="Long">
     <![CDATA[

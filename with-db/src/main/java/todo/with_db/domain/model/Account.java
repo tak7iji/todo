@@ -1,0 +1,69 @@
+package todo.with_db.domain.model;
+
+import java.io.Serializable;
+
+public class Account implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+    private String username;
+
+    public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	private String password;
+	
+	private String authorities;
+
+    public String getAuthorities() {
+		return authorities;
+	}
+
+	public void setAuthorities(String authorities) {
+		this.authorities = authorities;
+	}
+
+	private String firstName;
+
+    private String lastName;
+    
+    @Override
+    public String toString() {
+        return "Account [username=" + username + ", password=" + password
+                + ", firstName=" + firstName + ", lastName=" + lastName + ", authorities=" + authorities + "]";
+    }
+
+
+}

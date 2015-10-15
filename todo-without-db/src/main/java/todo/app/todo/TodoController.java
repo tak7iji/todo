@@ -3,6 +3,8 @@ package todo.app.todo;
 import org.dozer.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -52,6 +54,7 @@ public class TodoController {
 	public String list(Model model) {
 		Collection<Todo> todos = todoService.findAll();
 		model.addAttribute("todos", todos);
+		logger.info("Hash: {}", new BCryptPasswordEncoder().matches("demo", "$2a$10$knIF9TtzQuoz4SfDXOiQ8.XIoAaWGfi3uA7yvoC7l9AxaF4DZETmq"));
 		return "todo/list";
 	}
 
@@ -96,6 +99,7 @@ public class TodoController {
 		}
 
 		logger.info("Add new Todo.");
+
 		attributes.addFlashAttribute(ResultMessages.success().add("i.td.ct.0001"));
 		return "redirect:/todo/complete";
 	}

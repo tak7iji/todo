@@ -20,6 +20,13 @@
             <form:errors path="todoTitle" cssClass="text-error" />
             <form:button>Create Todo</form:button>
         </form:form>
+        <sec:authorize access="hasRole('ROLE_ADMIN')">
+            <form:form
+               action="${pageContext.request.contextPath}/todo/deleteAll"
+                method="post">
+                <form:button>Delete All Todo</form:button>
+            </form:form>
+        </sec:authorize>
     </div>
     <hr />
     <div id="todoList">
