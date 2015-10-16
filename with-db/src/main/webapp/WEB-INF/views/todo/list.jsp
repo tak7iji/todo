@@ -58,5 +58,10 @@
         </ul>
     </div>
     <t:pagination page="${todos}" outerElementClass="pagination" disabledClass="invisible" pathTmpl="list" />
+    <div id="logout">
+        <form:form action="${pageContext.request.contextPath}/logout">
+            <button>Logout</button>
+        </form:form>
+    </div>
 </body>
 </html>

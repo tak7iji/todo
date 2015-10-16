@@ -114,4 +114,5 @@
             pointcut="execution(* org.springframework.web.servlet.HandlerExceptionResolver.resolveException(..))" />
     </aop:config>
 
+    <mvc:view-controller path="/login" view-name="login" />
 </beans>
