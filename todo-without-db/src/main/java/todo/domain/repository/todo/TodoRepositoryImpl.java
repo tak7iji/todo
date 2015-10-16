@@ -1,11 +1,12 @@
 package todo.domain.repository.todo;
 
-import org.springframework.stereotype.Repository;
-import todo.domain.model.Todo;
-
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.springframework.stereotype.Repository;
+
+import todo.domain.model.Todo;
 
 /**
  * Created by mash on 2015/10/01.

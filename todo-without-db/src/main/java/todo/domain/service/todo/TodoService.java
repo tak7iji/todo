@@ -1,8 +1,8 @@
 package todo.domain.service.todo;
 
-import todo.domain.model.Todo;
-
 import java.util.Collection;
+
+import todo.domain.model.Todo;
 
 /**
  * Created by mash on 2015/10/01.
