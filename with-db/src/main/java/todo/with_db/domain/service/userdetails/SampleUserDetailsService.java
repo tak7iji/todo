@@ -13,18 +13,18 @@ import todo.with_db.domain.model.Account;
 import todo.with_db.domain.service.account.AccountSharedService;
 
 @Service
-public class SampleUserDetailsService implements UserDetailsService { // (1)
+public class SampleUserDetailsService implements UserDetailsService {
     @Inject
-    AccountSharedService accountSharedService; // (2)
+    AccountSharedService accountSharedService;
 
     @Transactional(readOnly=true)
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         try {
-            Account account = accountSharedService.findOne(username); // (3)
-            return new SampleUserDetails(account); // (4)
+            Account account = accountSharedService.findOne(username);
+            return new SampleUserDetails(account);
         } catch (ResourceNotFoundException e) {
-            throw new UsernameNotFoundException("user not found", e); // (5)
+            throw new UsernameNotFoundException("user not found", e);
         }
     }
 
