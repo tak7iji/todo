@@ -39,9 +39,4 @@
 		<property name="adjustedValueQuery" value="SELECT diff * 60 * 1000 FROM operation_date" />
 	</bean>
 	
-    <jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
-        <jdbc:script location="classpath:/sql/${database}-schema.sql" />
-        <jdbc:script location="classpath:/sql/${database}-dataload.sql" />
-    </jdbc:initialize-database>
-	
 </beans>
