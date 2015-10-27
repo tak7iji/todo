@@ -3,9 +3,6 @@ package todo.domain.model;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * Created by mash on 2015/10/01.
- */
 public class Todo implements Serializable {
     private static final long serialVersionUID = 1L;
 
