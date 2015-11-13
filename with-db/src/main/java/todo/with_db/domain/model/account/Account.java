@@ -1,4 +1,4 @@
-package todo.with_db.domain.model;
+package todo.with_db.domain.model.account;
 
 import java.io.Serializable;
 

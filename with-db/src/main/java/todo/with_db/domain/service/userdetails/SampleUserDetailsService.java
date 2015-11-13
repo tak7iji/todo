@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
 
-import todo.with_db.domain.model.Account;
+import todo.with_db.domain.model.account.Account;
 import todo.with_db.domain.service.account.AccountSharedService;
 
 @Service

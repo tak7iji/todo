@@ -1,8 +1,9 @@
 package todo.with_db.app.todo;
 
+import java.io.Serializable;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 
 /**
  * Created by mash on 2015/10/01.

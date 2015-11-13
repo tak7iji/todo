@@ -1,9 +1,9 @@
 package todo.with_db.domain.service.todo;
 
-import todo.with_db.domain.model.Todo;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import todo.with_db.domain.model.todo.Todo;
 
 /**
  * Created by mash on 2015/10/01.

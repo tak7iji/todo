@@ -1,5 +1,8 @@
 package todo.with_db.app.todo;
 
+import javax.inject.Inject;
+import javax.validation.groups.Default;
+
 import org.dozer.Mapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,11 +20,8 @@ import org.terasoluna.gfw.common.message.ResultMessage;
 import org.terasoluna.gfw.common.message.ResultMessages;
 
 import todo.with_db.app.todo.TodoForm.TodoDelete;
-import todo.with_db.domain.model.Todo;
+import todo.with_db.domain.model.todo.Todo;
 import todo.with_db.domain.service.todo.TodoService;
-
-import javax.inject.Inject;
-import javax.validation.groups.Default;
 
 /**
  * Created by mash on 2015/10/01.

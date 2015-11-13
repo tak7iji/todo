@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import todo.with_db.domain.model.Account;
+import todo.with_db.domain.model.account.Account;
 import todo.with_db.domain.service.userdetails.SampleUserDetails;
 
 @Controller

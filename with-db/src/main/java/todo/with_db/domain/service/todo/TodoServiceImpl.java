@@ -1,5 +1,12 @@
 package todo.with_db.domain.service.todo;
 
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
+import javax.inject.Inject;
+
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -13,14 +20,9 @@ import org.terasoluna.gfw.common.exception.BusinessException;
 import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
 import org.terasoluna.gfw.common.message.ResultMessage;
 import org.terasoluna.gfw.common.message.ResultMessages;
-import todo.with_db.domain.model.Todo;
-import todo.with_db.domain.repository.todo.TodoRepository;
 
-import javax.inject.Inject;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import todo.with_db.domain.model.todo.Todo;
+import todo.with_db.domain.repository.todo.TodoRepository;
 
 /**
  * Created by mash on 2015/10/01.

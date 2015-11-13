@@ -177,5 +177,10 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+        	<groupId>todo</groupId>
+        	<artifactId>without-db-env</artifactId>
+        	<version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>
