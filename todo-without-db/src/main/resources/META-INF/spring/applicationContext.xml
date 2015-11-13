@@ -10,8 +10,9 @@
 
     <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
+    <!-- 全てのクラスパス（JARファイルを含む）を検索対象とするために、classpath*:をつける -->
     <context:property-placeholder
-        location="classpath*:/META-INF/spring/*.properties" />
+        location="classpath*:META-INF/spring/*.properties" />
 
     <bean class="org.dozer.spring.DozerBeanMapperFactoryBean">
         <property name="mappingFiles"

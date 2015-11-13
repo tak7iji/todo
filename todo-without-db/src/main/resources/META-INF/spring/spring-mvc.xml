@@ -9,8 +9,9 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
+    <!-- 全てのクラスパス（JARファイルを含む）を検索対象とするために、classpath*:をつける -->
     <context:property-placeholder
-        location="classpath*:/META-INF/spring/*.properties" />
+        location="classpath*:META-INF/spring/*.properties" />
 
     <mvc:annotation-driven>
         <mvc:argument-resolvers>

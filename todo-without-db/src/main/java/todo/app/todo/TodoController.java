@@ -51,7 +51,7 @@ public class TodoController {
 	@RequestMapping(value = "list")
 	public String list(Model model) {
 		Collection<Todo> todos = todoService.findAll();
-//		model.addAttribute("todos", todos);
+		model.addAttribute("todos", todos);
 		logger.info("Hash: {}", new BCryptPasswordEncoder().matches("demo", "$2a$10$knIF9TtzQuoz4SfDXOiQ8.XIoAaWGfi3uA7yvoC7l9AxaF4DZETmq"));
 		return "todo/list";
 	}
