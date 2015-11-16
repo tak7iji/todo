@@ -9,25 +9,25 @@
     <div id="wrapper">
         <h3>Login with Username and Password</h3>
 
-        <!-- (1) -->
+        ${SPRING_SECURITY_LAST_EXCEPTION}
         <c:if test="${param.error}">
-            <!-- (2) -->
-            <t:messagesPanel messagesType="error"
-                messagesAttributeName="SPRING_SECURITY_LAST_EXCEPTION" />
+            <div id="has_error">
+	            <t:messagesPanel messagesType="error"
+	                messagesAttributeName="SPRING_SECURITY_LAST_EXCEPTION" />
+            </div>
         </c:if>
 
-        <!-- (3) -->
         <form:form action="${pageContext.request.contextPath}/authenticate">
             <table>
                 <tr>
                     <td><label for="j_username">User:</label></td>
                     <td><input type="text" id="j_username"
-                        name="j_username" value='user1'>(demo)</td><!-- (4) -->
+                        name="j_username" value='user1'>(demo)</td>
                 </tr>
                 <tr>
                     <td><label for="j_password">Password:</label></td>
                     <td><input type="password" id="j_password"
-                        name="j_password" value="demo" />(demo)</td><!-- (5) -->
+                        name="j_password" value="demo" />(demo)</td>
                 </tr>
                 <tr>
                     <td>&nbsp;</td>

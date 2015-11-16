@@ -10,6 +10,7 @@
     <import resource="classpath*:META-INF/spring/**/*-codelist.xml" />
 
     <context:component-scan base-package="todo.domain" />
+    <context:property-placeholder location="classpath:META-INF/todo/todo.properties"/>
 
     <!-- AOP. -->
     <bean id="resultMessagesLoggingInterceptor"
