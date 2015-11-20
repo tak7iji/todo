@@ -23,9 +23,7 @@ public class CustomValidator implements Validator {
 		int low = form.getLow();
 		
 		if(high + middle + low > form.getThreshold()) {
-			errors.rejectValue("high", "", "high must be lower than threshold");
-			errors.rejectValue("middle", "", "middle must be lower than threshold");
-			errors.rejectValue("low", "", "low must be lower than threshold");
+			errors.reject("", "high+middle+low must be lower than threshold");
 		}
 
 	}
