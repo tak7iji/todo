@@ -1,10 +1,13 @@
 package validate.validate.app.welcome;
 
+import validate.validate.app.validation.NonNegative;
+
 public class ValidateForm {
 	int high;
 	int middle;
 	int low;
 	
+	@NonNegative
 	int threshold;
 
 	public int getHigh() {

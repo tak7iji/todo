@@ -16,6 +16,10 @@ public class CustomValidator implements Validator {
 
 	@Override
 	public void validate(Object target, Errors errors) {
+		if(errors.hasErrors()) {
+			return;
+		}
+		
 		ValidateForm form = (ValidateForm) target;
 		
 		int high = form.getHigh();
@@ -23,7 +27,8 @@ public class CustomValidator implements Validator {
 		int low = form.getLow();
 		
 		if(high + middle + low > form.getThreshold()) {
-			errors.reject("", "high+middle+low must be lower than threshold");
+			Object[] args = {form.getThreshold()};
+			errors.reject("validate.validate.app.validation.CustomValidator.message", args, "");
 		}
 
 	}
