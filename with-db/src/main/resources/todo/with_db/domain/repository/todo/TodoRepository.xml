@@ -4,14 +4,14 @@
 
 <mapper namespace="todo.with_db.domain.repository.todo.TodoRepository">
 
-    <resultMap id="todoResultMap" type="Todo">
-        <id property="todoId" column="todo_id" />
-        <result property="todoTitle" column="todo_title" />
-        <result property="finished" column="finished" />
-        <result property="createdAt" column="created_at" />
-    </resultMap>
+	<resultMap id="todoResultMap" type="Todo">
+		<id property="todoId" column="todo_id" />
+		<result property="todoTitle" column="todo_title" />
+		<result property="finished" column="finished" />
+		<result property="createdAt" column="created_at" />
+	</resultMap>
 
-    <select id="findOne" parameterType="String" resultMap="todoResultMap">
+	<select id="findOne" parameterType="String" resultMap="todoResultMap">
     <![CDATA[
         SELECT
             todo_id,
@@ -23,18 +23,18 @@
         WHERE
             todo_id = #{todoId}
     ]]>
-    </select>
+	</select>
 
-    <select id="countAll" resultType="_long">
+	<select id="countAll" resultType="_long">
     <![CDATA[
         SELECT
             count(*)
         FROM
             todo
     ]]>
-    </select>
+	</select>
 
-    <select id="findAll" resultMap="todoResultMap">
+	<select id="findAll" resultMap="todoResultMap">
     <![CDATA[
         SELECT
             todo_id,
@@ -44,9 +44,9 @@
         FROM
             todo
     ]]>
-    </select>
+	</select>
 
-    <insert id="create" parameterType="Todo">
+	<insert id="create" parameterType="Todo">
     <![CDATA[
         INSERT INTO todo
         (
@@ -63,9 +63,9 @@
             #{createdAt}
         )
     ]]>
-    </insert>
+	</insert>
 
-    <update id="update" parameterType="Todo">
+	<update id="update" parameterType="Todo">
     <![CDATA[
         UPDATE todo
         SET
@@ -75,26 +75,25 @@
         WHERE
             todo_id = #{todoId}
     ]]>
-    </update>
+	</update>
 
-    <delete id="delete" parameterType="Todo">
+	<delete id="delete" parameterType="Todo">
     <![CDATA[
         DELETE FROM
             todo
         WHERE
             todo_id = #{todoId}
     ]]>
-    </delete>
+	</delete>
 
-    <delete id="deleteAll">
+	<delete id="deleteAll">
     <![CDATA[
         DELETE FROM
             todo
     ]]>
-    </delete>
+	</delete>
 
-    <select id="countByFinished" parameterType="Boolean"
-        resultType="Long">
+	<select id="countByFinished" parameterType="Boolean" resultType="Long">
     <![CDATA[
         SELECT
             COUNT(*)
@@ -103,6 +102,6 @@
         WHERE
             finished = #{finished}
     ]]>
-    </select>
+	</select>
 
 </mapper>
