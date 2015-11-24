@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.sample.demo.domain.repository.name.NameRepository">
+
+    <select id="findOne" resultType="java.lang.String">
+    <![CDATA[
+        SELECT
+            name
+        FROM
+            name
+    ]]>
+    </select>
+
+</mapper>
