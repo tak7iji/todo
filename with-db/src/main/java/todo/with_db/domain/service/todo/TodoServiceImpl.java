@@ -28,7 +28,7 @@ import todo.with_db.domain.repository.todo.TodoRepository;
  * Created by mash on 2015/10/01.
  */
 @Service
-@Transactional
+//@Transactional
 public class TodoServiceImpl implements TodoService {
 
 	@Value("${max.unfinished.count:5}")
@@ -40,6 +40,7 @@ public class TodoServiceImpl implements TodoService {
     @Inject
     JodaTimeDateFactory dateFactory;
     
+    @Transactional
     public Todo findOne(String todoId) {
         Todo todo = todoRepository.findOne(todoId);
         if (todo == null) {
@@ -69,6 +70,7 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
+    @Transactional
     public Todo create(Todo todo) {
         long unfinishedCount = todoRepository.countByFinished(false);
         if (unfinishedCount >= MAX_UNFINISHED_COUNT) {
@@ -96,7 +98,9 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
+//    @Transactional
     public Todo finish(String todoId) {
+    	// Serviceからfinishやdeleteを呼び出すと、トランザクション管理外なので、AOPプロキシは介すが、TrnasactionInterceptorは呼ばれない（あたりまえか・・・）
         Todo todo = findOne(todoId);
         if (todo.isFinished()) {
             ResultMessages messages = ResultMessages.error();
@@ -114,6 +118,7 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
+//    @Transactional
     public void delete(String todoId) {
         Todo todo = findOne(todoId);
         todoRepository.delete(todo);
@@ -121,6 +126,7 @@ public class TodoServiceImpl implements TodoService {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Override
+    @Transactional
 	public void deleteAll() {
 		todoRepository.deleteAll();
 		
