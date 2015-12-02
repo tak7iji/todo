@@ -12,9 +12,11 @@ function clickButton(button) {
 </script>
 </head>
 <body>
+    <spring:eval var="message" expression="@sessionData.message" />
     <h1><spring:message code="title.todo.list"/></h1>
     <div id="todoForm">
         <t:messagesPanel />
+        ${message}
         <a href="<spring:url value="/todo/list" />">Back</a>
     </div>
     <hr />

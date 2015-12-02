@@ -5,7 +5,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 @Component
-@Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
+@Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class SessionData {
 	private String message;
 
@@ -15,5 +15,9 @@ public class SessionData {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	public void clearMessage() {
+		this.message = null;
 	}
 }

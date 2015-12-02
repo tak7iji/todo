@@ -41,11 +41,19 @@ public class TodoController {
 	@Inject
 	Mapper beanMapper;
 
+	@Inject
+	SessionData sessionData;
+	
 	@ModelAttribute
-	public TodoForm setUpForm() {
+	public TodoForm setUpTodoForm() {
 		TodoForm form = new TodoForm();
 		return form;
 	}
+	
+//	@ModelAttribute
+//	public SessionData setUpSessionData() {
+//		return sessionData;
+//	}
 
 //	@TransactionTokenCheck(value="create", type=TransactionTokenType.BEGIN)
 	@RequestMapping(value = "list")
@@ -68,6 +76,9 @@ public class TodoController {
 			return list(model);
 		}
 
+		logger.info("Message: {}", sessionData.getMessage());
+		sessionData.setMessage(todoForm.getTodoTitle());
+
 		// Todo todo = beanMapper.map(todoForm, Todo.class);
 		//
 		// try {
@@ -85,6 +96,8 @@ public class TodoController {
 	@TransactionTokenCheck(value="create", type=TransactionTokenType.IN)
 	@RequestMapping(value = "confirm", method = RequestMethod.POST)
 	public String confirm(TodoForm todoForm, Model model, RedirectAttributes attributes) {
+		logger.info("Message: {}", sessionData.getMessage());
+
 		Todo todo = beanMapper.map(todoForm, Todo.class);
 
 		try {
@@ -104,6 +117,8 @@ public class TodoController {
 	
 	@RequestMapping(value = "complete", method = RequestMethod.GET)
 	public String complete(Model model) {
+		logger.info("Message: {}", sessionData.getMessage());
+		sessionData.clearMessage();
 		return "todo/complete";
 	}
 

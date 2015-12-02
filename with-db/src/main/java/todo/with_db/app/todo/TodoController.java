@@ -21,7 +21,7 @@ import org.terasoluna.gfw.common.message.ResultMessages;
 
 import todo.with_db.app.todo.TodoForm.TodoDelete;
 import todo.with_db.domain.model.todo.Todo;
-import todo.with_db.domain.service.todo.TodoService;
+import todo.with_db.domain.service.todo.TodoServiceImpl;
 
 /**
  * Created by mash on 2015/10/01.
@@ -30,7 +30,7 @@ import todo.with_db.domain.service.todo.TodoService;
 @RequestMapping("todo")
 public class TodoController {
     @Inject
-    TodoService todoService;
+    TodoServiceImpl todoService;
 
     @Inject
     Mapper beanMapper;

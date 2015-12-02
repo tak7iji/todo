@@ -24,7 +24,7 @@ import todo.domain.repository.todo.TodoRepository;
 @Transactional
 public class TodoServiceImpl implements TodoService {
 
-	@Value("${max.unfinished.count}")
+	@Value("2")
 	private long MAX_UNFINISHED_COUNT;
 
     @Inject
