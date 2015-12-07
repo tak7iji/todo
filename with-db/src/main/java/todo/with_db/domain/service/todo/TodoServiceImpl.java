@@ -8,10 +8,13 @@ import java.util.UUID;
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.RowBounds;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +34,10 @@ import todo.with_db.domain.repository.todo.TodoRepository;
 //@Transactional
 public class TodoServiceImpl {
 
-	@Value("${max.unfinished.count:5}")
+    private static final Logger logger = LoggerFactory
+            .getLogger(TodoServiceImpl.class);
+
+    @Value("${max.unfinished.count:5}")
 	private long MAX_UNFINISHED_COUNT;
 
     @Inject
@@ -57,6 +63,10 @@ public class TodoServiceImpl {
     
     @Transactional(readOnly = true)
     public Page<Todo> findAll(Pageable pageable) {
+    	if(pageable != null) {
+        	Sort sort = pageable.getSort();
+        	logger.info("Sort: {}", (sort != null) ? sort.toString().replaceAll(":", "") : "null");
+    	}
     	long total = todoRepository.countAll();
         List<Todo> todos;
         if (0 < total) {

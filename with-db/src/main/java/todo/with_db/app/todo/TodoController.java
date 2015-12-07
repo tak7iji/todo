@@ -6,7 +6,9 @@ import javax.validation.groups.Default;
 import org.dozer.Mapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -42,7 +44,11 @@ public class TodoController {
     }
 
     @RequestMapping(value = "list")
-    public String list(@PageableDefault(5) Pageable pageable, Model model) {
+    public String list(
+    		@PageableDefault(5)
+            @SortDefault(direction=Direction.DESC, sort={"todo_id","todo_title"}) 
+            Pageable pageable, 
+            Model model) {
         Page<Todo> todos = todoService.findAll(pageable);
         model.addAttribute("todos", todos);
         return "todo/list";
@@ -51,7 +57,9 @@ public class TodoController {
     @RequestMapping(value = "create", method = RequestMethod.POST)
     public String create(@Validated({ Default.class, TodoForm.TodoCreate.class }) TodoForm todoForm,
                          BindingResult bindingResult,
-                         @PageableDefault(5) Pageable pageable,
+                         @PageableDefault(size=5)
+    					 @SortDefault(direction=Direction.DESC, sort={"todo_id","todo_title"}) 
+                         Pageable pageable,
                          Model model, RedirectAttributes attributes) {
 
         if (bindingResult.hasErrors()) {
