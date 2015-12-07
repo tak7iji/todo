@@ -16,6 +16,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.terasoluna.gfw.common.exception.BusinessException;
 import org.terasoluna.gfw.common.message.ResultMessages;
@@ -32,6 +34,7 @@ import todo.domain.service.todo.TodoService;
 @Controller
 @RequestMapping("todo")
 @TransactionTokenCheck("todo")
+@SessionAttributes(types={SessionData.class})
 public class TodoController {
 	private static final Logger logger = LoggerFactory.getLogger(TodoController.class);
 
@@ -41,8 +44,9 @@ public class TodoController {
 	@Inject
 	Mapper beanMapper;
 
-	@Inject
-	SessionData sessionData;
+//	@Inject
+//	SessionData sessionData;
+
 	
 	@ModelAttribute
 	public TodoForm setUpTodoForm() {
@@ -52,13 +56,14 @@ public class TodoController {
 	
 //	@ModelAttribute
 //	public SessionData setUpSessionData() {
-//		return sessionData;
+//		return new SessionData();
 //	}
 
 //	@TransactionTokenCheck(value="create", type=TransactionTokenType.BEGIN)
 	@RequestMapping(value = "list")
 	public String list(Model model) {
 		Collection<Todo> todos = todoService.findAll();
+		model.addAttribute("sessionData", new SessionData());
 		model.addAttribute("todos", todos);
 		logger.info("Hash: {}", new BCryptPasswordEncoder().matches("demo", "$2a$10$knIF9TtzQuoz4SfDXOiQ8.XIoAaWGfi3uA7yvoC7l9AxaF4DZETmq"));
 		return "todo/list";
@@ -69,6 +74,7 @@ public class TodoController {
 	public String create(
 	        @Validated({ Default.class,
 	                TodoForm.TodoCreate.class }) TodoForm todoForm,
+	        SessionData sessionData,
 	        BindingResult bindingResult, Model model,
 	        RedirectAttributes attributes) {
 
@@ -95,7 +101,7 @@ public class TodoController {
 
 	@TransactionTokenCheck(value="create", type=TransactionTokenType.IN)
 	@RequestMapping(value = "confirm", method = RequestMethod.POST)
-	public String confirm(TodoForm todoForm, Model model, RedirectAttributes attributes) {
+	public String confirm(SessionData sessionData, TodoForm todoForm, Model model, RedirectAttributes attributes) {
 		logger.info("Message: {}", sessionData.getMessage());
 
 		Todo todo = beanMapper.map(todoForm, Todo.class);
@@ -116,14 +122,15 @@ public class TodoController {
 	}
 	
 	@RequestMapping(value = "complete", method = RequestMethod.GET)
-	public String complete(Model model) {
+	public String complete(SessionStatus sessionStatus, SessionData sessionData, Model model) {
 		logger.info("Message: {}", sessionData.getMessage());
-		sessionData.clearMessage();
+		sessionStatus.setComplete();
+//		sessionData.clearMessage();
 		return "todo/complete";
 	}
 
 	@RequestMapping(value = "finish", method = RequestMethod.POST)
-	public String finish(
+	public String finish(SessionData sessionData,
 	        @Validated({ Default.class,
 	                TodoForm.TodoFinish.class }) TodoForm form,
 	        BindingResult bindingResult, Model model,
