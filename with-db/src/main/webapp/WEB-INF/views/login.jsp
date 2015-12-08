@@ -13,7 +13,9 @@
                 messagesAttributeName="SPRING_SECURITY_LAST_EXCEPTION"/>
         </c:if>
         <form:form action="${pageContext.request.contextPath}/authentication" method="post">
+            <label for="username">Username</label>
             <input type="text" id="username" name="j_username"><br>
+            <label for="password">Password</label>
             <input type="password" id="password" name="j_password"><br>
             <input type="submit" value="Login">
         </form:form>
