@@ -39,6 +39,6 @@ public class SessionData implements Serializable, HttpSessionBindingListener {
 
     @Override
     public void valueUnbound(HttpSessionBindingEvent event) {
-        logger.info("SessionData unbound to session {}", event.getSession().getId());
+        logger.info("SessionData unbound from session {}", event.getSession().getId());
     }
 }
