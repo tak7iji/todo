@@ -3,6 +3,7 @@ package todo.app.todo;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionBindingListener;
 
@@ -22,6 +23,11 @@ public class SessionData implements Serializable, HttpSessionBindingListener {
 	@PostConstruct
 	public void initSessionData() {
 		logger.info("SessionData initialized.");
+	}
+	
+	@PreDestroy
+	public void destroySessionData() {
+        logger.info("SessionData destroyed.");	    
 	}
 	
 	private static final long serialVersionUID = 1L;
