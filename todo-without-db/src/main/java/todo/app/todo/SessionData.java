@@ -3,6 +3,8 @@ package todo.app.todo;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpSessionBindingEvent;
+import javax.servlet.http.HttpSessionBindingListener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class SessionData implements Serializable {
+public class SessionData implements Serializable, HttpSessionBindingListener {
 	private static final Logger logger = LoggerFactory.getLogger(SessionData.class);
 	
 	public String name = "sessionData";
@@ -36,4 +38,14 @@ public class SessionData implements Serializable {
 	public void clearMessage() {
 		this.message = null;
 	}
+
+    @Override
+    public void valueBound(HttpSessionBindingEvent event) {
+        logger.info("SessionData bound to session {}", event.getSession().getId());
+    }
+
+    @Override
+    public void valueUnbound(HttpSessionBindingEvent event) {
+        logger.info("SessionData unbound from session {}", event.getSession().getId());
+    }
 }
