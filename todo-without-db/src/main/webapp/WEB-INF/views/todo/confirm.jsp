@@ -12,13 +12,12 @@ function clickButton(button) {
 </script>
 </head>
 <body>
-    <spring:eval var="message" expression="@sessionData.message" />
     <h1><spring:message code="title.todo.list"/></h1>
     <div id="todoForm">
         <form:form
            action="${pageContext.request.contextPath}/todo/confirm"
             method="post" modelAttribute="todoForm">
-            ${message}
+            ${todoForm.todoTitle}
             <input type="hidden" name="todoTitle" value="${todoForm.todoTitle}"/>
             <form:button onclick="clickButton(this)"><spring:message code="label.td.list.confirm"/></form:button>
         </form:form>

@@ -44,26 +44,21 @@ public class TodoController {
 	@Inject
 	Mapper beanMapper;
 
-//	@Inject
-//	SessionData sessionData;
-
-	
 	@ModelAttribute
 	public TodoForm setUpTodoForm() {
 		TodoForm form = new TodoForm();
 		return form;
 	}
 	
-//	@ModelAttribute
-//	public SessionData setUpSessionData() {
-//		return new SessionData();
-//	}
+	@ModelAttribute("sessionData")
+	public SessionData setUpSessionData() {
+		return new SessionData();
+	}
 
 //	@TransactionTokenCheck(value="create", type=TransactionTokenType.BEGIN)
 	@RequestMapping(value = "list")
 	public String list(Model model) {
 		Collection<Todo> todos = todoService.findAll();
-		model.addAttribute("sessionData", new SessionData());
 		model.addAttribute("todos", todos);
 		logger.info("Hash: {}", new BCryptPasswordEncoder().matches("demo", "$2a$10$knIF9TtzQuoz4SfDXOiQ8.XIoAaWGfi3uA7yvoC7l9AxaF4DZETmq"));
 		return "todo/list";
@@ -124,8 +119,7 @@ public class TodoController {
 	@RequestMapping(value = "complete", method = RequestMethod.GET)
 	public String complete(SessionStatus sessionStatus, SessionData sessionData, Model model) {
 		logger.info("Message: {}", sessionData.getMessage());
-		sessionStatus.setComplete();
-//		sessionData.clearMessage();
+//		sessionStatus.setComplete();
 		return "todo/complete";
 	}
 

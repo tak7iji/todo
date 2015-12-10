@@ -115,7 +115,7 @@
 
     <session-config>
         <!-- 30min -->
-        <session-timeout>30</session-timeout>
+        <session-timeout>10</session-timeout>
     </session-config>
 
 </web-app>
