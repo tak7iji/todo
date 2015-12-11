@@ -8,8 +8,9 @@
     href="${pageContext.request.contextPath}/resources/vendor/bootstrap-3.0.0/css/bootstrap.css"
     type="text/css" media="screen, projection">
 </head>
+<sec:authentication property="principal.username" var="username"/>
 <body>
-    <h1>Todo List</h1>
+    <h1>Todo List for ${username}</h1>
     <div id="todoForm">
         <t:messagesPanel />
 
