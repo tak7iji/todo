@@ -8,6 +8,7 @@ import javax.validation.groups.Default;
 import org.dozer.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.terasoluna.gfw.common.exception.BusinessException;
 import org.terasoluna.gfw.common.message.ResultMessages;
@@ -31,6 +36,7 @@ import todo.domain.service.todo.TodoService;
  */
 @Controller
 @RequestMapping("todo")
+@SessionAttributes("scopedTarget.sessionData")
 @TransactionTokenCheck("todo")
 public class TodoController {
 	private static final Logger logger = LoggerFactory.getLogger(TodoController.class);
@@ -50,7 +56,7 @@ public class TodoController {
 		return form;
 	}
 	
-//	@ModelAttribute
+//	@ModelAttribute("scopedTarget.sessionData")
 //	public SessionData setUpSessionData() {
 //		return sessionData;
 //	}
@@ -116,9 +122,12 @@ public class TodoController {
 	}
 	
 	@RequestMapping(value = "complete", method = RequestMethod.GET)
-	public String complete(Model model) {
+	public String complete(SessionStatus sessionStatus, Model model) {
 		logger.info("Message: {}", sessionData.getMessage());
-		sessionData.clearMessage();
+		// このメソッドを抜けると、SessionDataと関連するオブジェクト（DESTRUCTION_CALLBACK）はセッションから削除される（@PreDestroyも呼ばれる）。
+		// ただし、この後表示しているcomplete.jspの中で@sessionDataによりSessionDataにアクセスしているので、
+		// あたらしいオブジェクトが作成されて、セッションに格納される（ただし、値は入ってない）ので、動きがダサい。
+		sessionStatus.setComplete();
 		return "todo/complete";
 	}
 
