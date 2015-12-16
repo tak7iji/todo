@@ -8,14 +8,17 @@ import javax.validation.groups.Default;
 import org.dozer.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.terasoluna.gfw.common.exception.BusinessException;
 import org.terasoluna.gfw.common.message.ResultMessages;
@@ -49,6 +52,12 @@ public class TodoController {
 		TodoForm form = new TodoForm();
 		return form;
 	}
+	
+//	@ExceptionHandler
+//	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+//	public String error() {
+//		return "error";
+//	}
 	
 //	@ModelAttribute
 //	public SessionData setUpSessionData() {
@@ -100,18 +109,18 @@ public class TodoController {
 
 		Todo todo = beanMapper.map(todoForm, Todo.class);
 
-		try {
+//		try {
 			todoService.create(todo);
-		} catch (BusinessException e) {
-			logger.error("{}", e.getCause());
-
-			model.addAttribute(e.getResultMessages());
-			return list(model);
-		}
+//		} catch (BusinessException e) {
+//			logger.error("{}", e.getCause());
+//
+//			model.addAttribute(e.getResultMessages());
+//			return list(model);
+//		}
 
 		logger.info("Add new Todo.");
 
-		attributes.addFlashAttribute(ResultMessages.success().add("i.td.ct.0001"));
+		model.addAttribute(ResultMessages.success().add("i.td.ct.0001"));
 		return "todo/complete";
 	}
 	

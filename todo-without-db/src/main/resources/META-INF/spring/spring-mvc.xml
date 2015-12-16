@@ -97,7 +97,7 @@
         <property name="statusCodes">
             <map>
                 <entry key="common/error/resourceNotFoundError" value="404" />
-                <entry key="common/error/businessError" value="409" />
+                <entry key="common/error/businessError" value="404" />
                 <entry key="common/error/transactionTokenError" value="409" />
                 <entry key="common/error/dataAccessError" value="500" />
             </map>
