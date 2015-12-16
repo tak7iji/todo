@@ -112,10 +112,11 @@ public class TodoController {
 		logger.info("Add new Todo.");
 
 		attributes.addFlashAttribute(ResultMessages.success().add("i.td.ct.0001"));
-		return "redirect:/todo/complete";
+		return "todo/complete";
 	}
 	
-	@RequestMapping(value = "complete", method = RequestMethod.GET)
+	@TransactionTokenCheck(value="create", type=TransactionTokenType.IN)
+	@RequestMapping(value = "complete", method = RequestMethod.POST)
 	public String complete(Model model) {
 		logger.info("Message: {}", sessionData.getMessage());
 		sessionData.clearMessage();
