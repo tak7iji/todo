@@ -17,6 +17,8 @@
     </bean>
 
     <!-- scan for Mappers -->
-    <mybatis:scan base-package="todo.with_db.domain.repository" />
-
+    <!-- これはさすがにだめ -->
+    <mybatis:scan base-package="todo.with_db.domain.repository.todo, todo.with_db.domain.repository.account" />
+<!--     <mybatis:scan base-package="todo.with_db.domain.repository" /> -->
+    
 </beans>
