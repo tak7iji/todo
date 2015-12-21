@@ -15,8 +15,18 @@
     <!-- AOP. -->
     <bean id="resultMessagesLoggingInterceptor"
         class="org.terasoluna.gfw.common.exception.ResultMessagesLoggingInterceptor">
-        <property name="exceptionLogger" ref="exceptionLogger" />
+        <property name="exceptionLogger" ref="exceptionLogger4Domain" />
     </bean>
+    
+    <!-- Exception Logger. -->
+    <bean id="exceptionLogger4Domain"
+        class="org.terasoluna.gfw.common.exception.ExceptionLogger">
+<!--         <constructor-arg> -->
+<!--             <value>originalExceptionLogger</value> -->
+<!--         </constructor-arg> -->
+        <property name="exceptionCodeResolver" ref="exceptionCodeResolver" />
+    </bean>
+
     <aop:config>
         <aop:advisor advice-ref="resultMessagesLoggingInterceptor"
             pointcut="@within(org.springframework.stereotype.Service)" />

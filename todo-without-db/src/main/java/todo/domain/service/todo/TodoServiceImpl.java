@@ -7,6 +7,7 @@ import java.util.UUID;
 import javax.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.RecoverableDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.terasoluna.gfw.common.date.jodatime.JodaTimeDateFactory;
@@ -56,6 +57,8 @@ public class TodoServiceImpl implements TodoService {
         if (unfinishedCount >= MAX_UNFINISHED_COUNT) {
             ResultMessages messages = ResultMessages.error();
             messages.add("e.td.sv.2001", MAX_UNFINISHED_COUNT);
+//            messages.add("w.xx.fw.9002");
+//            throw new RecoverableDataAccessException("[E001] The count of un-finished Todo must not be over");
             throw new BusinessException(messages);
         }
 

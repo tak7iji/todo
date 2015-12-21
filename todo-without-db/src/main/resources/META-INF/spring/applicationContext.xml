@@ -38,7 +38,8 @@
                 <entry key="ResourceNotFoundException" value="e.xx.fw.5001" />
                 <entry key="InvalidTransactionTokenException" value="e.xx.fw.7001" />
                 <entry key="BusinessException" value="e.xx.fw.8001" />
-                <entry key=".DataAccessException" value="e.xx.fw.9002" />
+                <entry key="RecoverableDataAccessException" value="w.xx.fw.9002" />
+                <entry key=".DataAccessException" value="e.xx.fw.9003" />
             </map>
         </property>
         <property name="defaultExceptionCode" value="e.xx.fw.9001" />
@@ -47,9 +48,10 @@
     <!-- Exception Logger. -->
     <bean id="exceptionLogger"
         class="org.terasoluna.gfw.common.exception.ExceptionLogger">
-        <constructor-arg>
-            <value>originalExceptionLogger</value>
-        </constructor-arg>
+        <!-- ExceptionLoggerの引数に名前を指定した場合。合わせてlogback.xmlにoriginalExceptionLoggerという名前のロガーを追加すること -->
+<!--         <constructor-arg> -->
+<!--             <value>originalExceptionLogger</value> -->
+<!--         </constructor-arg> -->
         <property name="exceptionCodeResolver" ref="exceptionCodeResolver" />
     </bean>
 

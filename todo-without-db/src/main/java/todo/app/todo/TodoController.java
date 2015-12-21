@@ -109,14 +109,14 @@ public class TodoController {
 
 		Todo todo = beanMapper.map(todoForm, Todo.class);
 
-//		try {
+		try {
 			todoService.create(todo);
-//		} catch (BusinessException e) {
-//			logger.error("{}", e.getCause());
-//
-//			model.addAttribute(e.getResultMessages());
-//			return list(model);
-//		}
+		} catch (BusinessException e) {
+			logger.error("{}", e.getCause());
+
+			model.addAttribute(e.getResultMessages());
+			return list(model);
+		}
 
 		logger.info("Add new Todo.");
 
