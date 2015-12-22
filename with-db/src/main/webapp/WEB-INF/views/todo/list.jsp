@@ -4,9 +4,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Todo List</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css" type="text/css">
-<link rel="stylesheet"
-    href="${pageContext.request.contextPath}/resources/vendor/bootstrap-3.0.0/css/bootstrap.css"
-    type="text/css" media="screen, projection">
+<style type="text/css">
+.pagination li {
+    display: inline;
+}
+
+.pagination li>a {
+    margin-left: 10px;
+}
+</style>
 </head>
 <sec:authentication property="principal.username" var="username"/>
 <body>
@@ -65,6 +71,17 @@
             </c:forEach>
         </ul>
     </div>
-    <t:pagination page="${todos}" outerElementClass="pagination" disabledClass="invisible" pathTmpl="list" queryTmpl="page={page}&size={size}" />
+    <t:pagination page="${todos}" outerElementClass="pagination" />
+	<div>
+	    <fmt:formatNumber value="${(todos.number * todos.size) + 1}" /> -
+	    <fmt:formatNumber value="${(todos.number * todos.size) + todos.numberOfElements}" />
+	    <ul>
+	       <li>        ${todos.size}
+	       <li>        ${todos.number}
+	       <li>        ${todos.numberOfElements}
+	       <li>        ${todos.totalPages}
+	       <li>        ${todos.totalElements}
+	    </ul>
+	</div>
 </body>
 </html>
