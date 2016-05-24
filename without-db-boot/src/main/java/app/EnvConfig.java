@@ -1,5 +1,7 @@
 package app;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -47,12 +49,6 @@ public class EnvConfig {
 	@Value("${cp.maxWait}")
 	private Integer maxWaitMillis;
 	
-	@Value("classpath:database/H2-schema.sql")
-	private Resource schemaScript;
-	
-	@Value("classpath:database/H2-dataload.sql")
-	private Resource dataScript;
-	
 	@Bean(name="dateFactory")
 	public DefaultJodaTimeDateFactory dateFactory() {
 		return new DefaultJodaTimeDateFactory();
@@ -76,7 +72,8 @@ public class EnvConfig {
 	@Bean(name="dataSource")
 	@Primary
 	public DataSource dataSource() {
-		return new Log4jdbcProxyDataSource(realDataSource());
+		DataSource dataSource = new Log4jdbcProxyDataSource(realDataSource());
+		return dataSource;
 	}
 	
 	@Bean(name="transactionManager")
@@ -86,19 +83,28 @@ public class EnvConfig {
 		return transactionManager;
 	}
 	
-	@Bean
-	public DataSourceInitializer dataSourceInitializer(@Qualifier("dataSource") final DataSource dataSource) {
-	    final DataSourceInitializer initializer = new DataSourceInitializer();
-	    initializer.setDataSource(dataSource);
-	    initializer.setDatabasePopulator(databasePopulator());
-	    return initializer;
-	}
+//	@Value("classpath:database/H2-schema.sql")
+//	private Resource schemaScript;
+//	
+//	@Value("classpath:database/H2-dataload.sql")
+//	private Resource dataScript;
+//	
+//	@Inject
+//	@Bean(name="dataSourceInitializer")
+//	public DataSourceInitializer dataSourceInitializer(@Named("dataSource") DataSource dataSource) {
+//	    final DataSourceInitializer initializer = new DataSourceInitializer();
+//	    initializer.setDataSource(dataSource);
+//	    initializer.setDatabasePopulator(databasePopulator());
+//	    return initializer;
+//	}
+//
+//	private DatabasePopulator databasePopulator() {
+//	    final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+//	    populator.setContinueOnError(true);
+//	    populator.setSqlScriptEncoding("UTF-8");
+//	    populator.addScript(schemaScript);
+//	    populator.addScript(dataScript);
+//	    return populator;
+//	}
 
-	private DatabasePopulator databasePopulator() {
-	    final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-	    populator.setContinueOnError(true);
-	    populator.addScript(schemaScript);
-	    populator.addScript(dataScript);
-	    return populator;
-	}
 }
