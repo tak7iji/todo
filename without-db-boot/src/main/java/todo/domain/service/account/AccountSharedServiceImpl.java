@@ -17,9 +17,7 @@ public class AccountSharedServiceImpl implements AccountSharedService {
     @Transactional(readOnly=true)
     @Override
     public Account findOne(String username) {
-        // (1)
         Account account = accountRepository.findOne(username);
-        // (2)
         if (account == null) {
             throw new ResourceNotFoundException("The given account is not found! username="
                     + username);

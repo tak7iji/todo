@@ -4,7 +4,12 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.dozer.spring.DozerBeanMapperFactoryBean;
+import org.springframework.aop.Advisor;
+import org.springframework.aop.aspectj.AspectJExpressionPointcut;
+import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
@@ -24,6 +29,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.terasoluna.gfw.common.exception.ExceptionLogger;
 import org.terasoluna.gfw.common.exception.SimpleMappingExceptionCodeResolver;
 import org.terasoluna.gfw.web.exception.ExceptionLoggingFilter;
+import org.terasoluna.gfw.web.exception.HandlerExceptionResolverLoggingInterceptor;
 import org.terasoluna.gfw.web.logging.HttpSessionEventLoggingListener;
 import org.terasoluna.gfw.web.logging.mdc.MDCClearFilter;
 import org.terasoluna.gfw.web.logging.mdc.XTrackMDCPutFilter;
@@ -157,4 +163,21 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+	
+	@Bean
+	@Inject
+	public HandlerExceptionResolverLoggingInterceptor handlerExceptionResolverLoggingInterceptor(ExceptionLogger exceptionLogger) {
+		HandlerExceptionResolverLoggingInterceptor handlerExceptionResolverLoggingInterceptor = new HandlerExceptionResolverLoggingInterceptor();
+		handlerExceptionResolverLoggingInterceptor.setExceptionLogger(exceptionLogger);
+		return handlerExceptionResolverLoggingInterceptor;
+	}
+	
+	@Bean
+	@Inject
+	public Advisor handlerExceptionResolverLogging(HandlerExceptionResolverLoggingInterceptor handlerExceptionResolverLoggingInterceptor) {
+        AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
+        pointcut.setExpression("execution(* org.springframework.web.servlet.HandlerExceptionResolver.resolveException(..))");
+        return new DefaultPointcutAdvisor(pointcut, handlerExceptionResolverLoggingInterceptor);
+	}
+
 }
