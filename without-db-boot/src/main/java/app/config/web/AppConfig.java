@@ -1,119 +1,36 @@
 package app.config.web;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.LinkedHashMap;
-import java.util.List;
-
-import javax.inject.Inject;
 
 import org.dozer.spring.DozerBeanMapperFactoryBean;
-import org.springframework.aop.Advisor;
-import org.springframework.aop.aspectj.AspectJExpressionPointcut;
-import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
-import org.springframework.boot.context.embedded.ErrorPage;
-import org.springframework.boot.context.embedded.FilterRegistrationBean;
-import org.springframework.boot.context.embedded.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpStatus;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.filter.CharacterEncodingFilter;
-import org.springframework.web.filter.DelegatingFilterProxy;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.terasoluna.gfw.common.exception.ExceptionLogger;
 import org.terasoluna.gfw.common.exception.SimpleMappingExceptionCodeResolver;
 import org.terasoluna.gfw.web.exception.ExceptionLoggingFilter;
-import org.terasoluna.gfw.web.exception.HandlerExceptionResolverLoggingInterceptor;
-import org.terasoluna.gfw.web.logging.HttpSessionEventLoggingListener;
-import org.terasoluna.gfw.web.logging.mdc.MDCClearFilter;
-import org.terasoluna.gfw.web.logging.mdc.XTrackMDCPutFilter;
 
 @Configuration
-@ComponentScan("todo.app")
-public class AppConfig extends WebMvcConfigurerAdapter {
+public class AppConfig {
 	
 	@Value("classpath*:/META-INF/dozer/**/*-mapping.xml")
 	private Resource[] mappingFiles;
 	
-	@Bean
-	public EmbeddedServletContainerCustomizer containerCustomizer(){
-	    return new CustomizerImpl();
-	}
-
-	private static class CustomizerImpl implements EmbeddedServletContainerCustomizer {
-
-	    @Override
-	    public void customize(ConfigurableEmbeddedServletContainer container) {
-	        container.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/WEB-INF/views/common/error/systemError.jsp"),
-	                                new ErrorPage(HttpStatus.NOT_FOUND, "/WEB-INF/views/common/error/resourceNotFoundError.jsp"),
-    		                        new ErrorPage(Exception.class, "/WEB-INF/views/common/error/unhandledSystemError.jsp"));
-	    }
-
-	}
-	
-	@Bean
-	public ServletListenerRegistrationBean<HttpSessionEventLoggingListener>  httpSessionEventLoggingListener() {
-		ServletListenerRegistrationBean<HttpSessionEventLoggingListener> listenerRegBean = new ServletListenerRegistrationBean<HttpSessionEventLoggingListener>();
-		listenerRegBean.setListener(new HttpSessionEventLoggingListener());
-		return listenerRegBean;
-	}
-	
-	@Bean
-	public FilterRegistrationBean registMdcClearFilter() {
-	    FilterRegistrationBean filterRegBean = new FilterRegistrationBean();
-	    filterRegBean.setName("MDCClearFilter");
-	    filterRegBean.setFilter(new MDCClearFilter());
-	    List<String> urlPatterns = new ArrayList<String>();
-	    urlPatterns.add("/*");
-	    filterRegBean.setUrlPatterns(urlPatterns);
-	    return filterRegBean;
-	}
-	
-	@Bean
-	public FilterRegistrationBean registExceptionLoggingFilter() {
-	    FilterRegistrationBean filterRegBean = new FilterRegistrationBean();
-	    filterRegBean.setName("exceptionLoggingFilter");
-	    filterRegBean.setFilter(new DelegatingFilterProxy());
-	    List<String> urlPatterns = new ArrayList<String>();
-	    urlPatterns.add("/*");
-	    filterRegBean.setUrlPatterns(urlPatterns);
-	    return filterRegBean;
-	}
-	
-	
-
-	@Bean
-	public FilterRegistrationBean registXtrackMDCPutFilter() {
-	    FilterRegistrationBean filterRegBean = new FilterRegistrationBean();
-	    filterRegBean.setName("XTrackMDCPutFilter");
-	    filterRegBean.setFilter(new XTrackMDCPutFilter());
-	    List<String> urlPatterns = new ArrayList<String>();
-	    urlPatterns.add("/*");
-	    filterRegBean.setUrlPatterns(urlPatterns);
-	    return filterRegBean;
-	}
-
-	@Bean
-	public FilterRegistrationBean registCharacterEncodingFilter() {
-	    FilterRegistrationBean filterRegBean = new FilterRegistrationBean();
-	    filterRegBean.setName("CharacterEncodingFilter");
-	    CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
-	    characterEncodingFilter.setEncoding("UTF-8");
-	    characterEncodingFilter.setForceEncoding(true);
-	    filterRegBean.setFilter(characterEncodingFilter);
-	    List<String> urlPatterns = new ArrayList<String>();
-	    urlPatterns.add("/*");
-	    filterRegBean.setUrlPatterns(urlPatterns);
-	    return filterRegBean;
-	}
-
-	@Bean(name="beanMapper")
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer  getPropertyPlaceholderConfigurer()
+            throws IOException {
+    	PropertySourcesPlaceholderConfigurer  ppc = new PropertySourcesPlaceholderConfigurer ();
+        ppc.setLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:/META-INF/spring/*.properties"));
+        return ppc;
+    }
+    
+    @Bean(name="beanMapper")
 	public DozerBeanMapperFactoryBean beanMapper() {
 		DozerBeanMapperFactoryBean beanMapper = new DozerBeanMapperFactoryBean();
 		beanMapper.setMappingFiles(mappingFiles);
@@ -163,21 +80,4 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
-	@Bean
-	@Inject
-	public HandlerExceptionResolverLoggingInterceptor handlerExceptionResolverLoggingInterceptor(ExceptionLogger exceptionLogger) {
-		HandlerExceptionResolverLoggingInterceptor handlerExceptionResolverLoggingInterceptor = new HandlerExceptionResolverLoggingInterceptor();
-		handlerExceptionResolverLoggingInterceptor.setExceptionLogger(exceptionLogger);
-		return handlerExceptionResolverLoggingInterceptor;
-	}
-	
-	@Bean
-	@Inject
-	public Advisor handlerExceptionResolverLogging(HandlerExceptionResolverLoggingInterceptor handlerExceptionResolverLoggingInterceptor) {
-        AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
-        pointcut.setExpression("execution(* org.springframework.web.servlet.HandlerExceptionResolver.resolveException(..))");
-        return new DefaultPointcutAdvisor(pointcut, handlerExceptionResolverLoggingInterceptor);
-	}
-
 }

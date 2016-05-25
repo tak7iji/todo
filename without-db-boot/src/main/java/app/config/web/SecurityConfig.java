@@ -20,7 +20,11 @@ import org.springframework.security.web.access.DelegatingAccessDeniedHandler;
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.security.web.csrf.InvalidCsrfTokenException;
 import org.springframework.security.web.csrf.MissingCsrfTokenException;
+import org.springframework.security.web.servlet.support.csrf.CsrfRequestDataValueProcessor;
+import org.springframework.web.servlet.support.RequestDataValueProcessor;
 import org.terasoluna.gfw.security.web.logging.UserIdMDCPutFilter;
+import org.terasoluna.gfw.web.mvc.support.CompositeRequestDataValueProcessor;
+import org.terasoluna.gfw.web.token.transaction.TransactionTokenRequestDataValueProcessor;
 
 @Configuration
 @EnableWebSecurity
@@ -77,4 +81,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public UserIdMDCPutFilter userIdMDCPutFilter() {
 		return new UserIdMDCPutFilter();
 	}
+	
+	// MVCConfigで定義すると、SpringSecurityが作るCsrfRequestDataValueProcessorで上書きされてしまう
+	@Bean(name="requestDataValueProcessor")
+	public RequestDataValueProcessor requestDataValueProcessor() {
+		CompositeRequestDataValueProcessor compositeRequestDataValueProcessor = new CompositeRequestDataValueProcessor(csrfRequestDataValueProcessor(), transactionTokenRequestDataValueProcessor());
+		return compositeRequestDataValueProcessor;
+	}
+	
+	@Bean
+	public static CsrfRequestDataValueProcessor csrfRequestDataValueProcessor() {
+		return new CsrfRequestDataValueProcessor();
+	}
+	
+	@Bean
+	public static TransactionTokenRequestDataValueProcessor transactionTokenRequestDataValueProcessor() {
+		return new TransactionTokenRequestDataValueProcessor();
+	}
+
 }
