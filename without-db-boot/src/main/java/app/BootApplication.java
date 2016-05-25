@@ -16,7 +16,7 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 
 @SpringBootApplication
-@ComponentScan({"app", "todo"})
+@ComponentScan({"app"})
 public class BootApplication {
     public static void main(String[] args) {
         SpringApplication.run(BootApplication.class, args);

@@ -1,4 +1,4 @@
-package app;
+package app.config.web;
 
 import java.util.LinkedHashMap;
 
@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		addFilterAfter(userIdMDCPutFilter(), AnonymousAuthenticationFilter.class).
 		sessionManagement();
 		
-		http.formLogin().loginPage("/login").failureUrl("/login?error=true").defaultSuccessUrl("/todo/list").loginProcessingUrl("/auth");
+		http.formLogin().loginPage("/login").failureUrl("/login?error=true").defaultSuccessUrl("/todo/list", true).loginProcessingUrl("/auth");
 		http.logout().logoutSuccessUrl("/").deleteCookies("JSESSIONID");
 		
 		http.authorizeRequests().antMatchers("/login").permitAll();

@@ -1,4 +1,4 @@
-package app;
+package app.config.web;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -12,6 +12,7 @@ import org.springframework.boot.context.embedded.ErrorPage;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.boot.context.embedded.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.io.Resource;
@@ -28,6 +29,7 @@ import org.terasoluna.gfw.web.logging.mdc.MDCClearFilter;
 import org.terasoluna.gfw.web.logging.mdc.XTrackMDCPutFilter;
 
 @Configuration
+@ComponentScan("todo.app")
 public class AppConfig extends WebMvcConfigurerAdapter {
 	
 	@Value("classpath*:/META-INF/dozer/**/*-mapping.xml")
@@ -99,17 +101,6 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	    characterEncodingFilter.setEncoding("UTF-8");
 	    characterEncodingFilter.setForceEncoding(true);
 	    filterRegBean.setFilter(characterEncodingFilter);
-	    List<String> urlPatterns = new ArrayList<String>();
-	    urlPatterns.add("/*");
-	    filterRegBean.setUrlPatterns(urlPatterns);
-	    return filterRegBean;
-	}
-
-	@Bean
-	public FilterRegistrationBean registSpringSecurityFilterChain() {
-	    FilterRegistrationBean filterRegBean = new FilterRegistrationBean();
-	    filterRegBean.setName("springSecurityFilterChain");
-	    filterRegBean.setFilter(new DelegatingFilterProxy());
 	    List<String> urlPatterns = new ArrayList<String>();
 	    urlPatterns.add("/*");
 	    filterRegBean.setUrlPatterns(urlPatterns);

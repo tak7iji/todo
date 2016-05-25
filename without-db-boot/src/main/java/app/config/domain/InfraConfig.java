@@ -1,4 +1,4 @@
-package app;
+package app.config.domain;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;

@@ -11,9 +11,17 @@ function clickButton(button) {
     button.parentNode.submit();
 }
 </script>
+<sec:authentication property="principal.account" var="account" />
 </head>
 <body>
     <h1><spring:message code="title.todo.list"/></h1>
+    <div id="logout">
+        <p>Login User: ${f:h(account.firstName)} ${f:h(account.lastName)}</p>
+        <form:form action="${pageContext.request.contextPath}/logout">
+            <button type="submit">Logout</button>
+       </form:form>
+       <p>
+    </div>
     <div id="todoForm">
         <t:messagesPanel />
 
