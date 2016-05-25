@@ -1,22 +1,20 @@
 package todo.domain.service.todo;
 
-import org.joda.time.DateTime;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.token.TokenService;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.terasoluna.gfw.common.date.jodatime.JodaTimeDateFactory;
-import org.terasoluna.gfw.common.exception.BusinessException;
-import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
-import org.terasoluna.gfw.common.message.ResultMessage;
-import org.terasoluna.gfw.common.message.ResultMessages;
-import todo.domain.model.Todo;
-import todo.domain.repository.todo.TodoRepository;
-
-import javax.inject.Inject;
 import java.util.Collection;
 import java.util.Date;
 import java.util.UUID;
+
+import javax.inject.Inject;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.terasoluna.gfw.common.exception.BusinessException;
+import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
+import org.terasoluna.gfw.common.message.ResultMessages;
+
+import todo.domain.model.Todo;
+import todo.domain.repository.todo.TodoRepository;
 
 /**
  * Created by mash on 2015/10/01.

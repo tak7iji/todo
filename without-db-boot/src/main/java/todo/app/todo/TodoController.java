@@ -1,5 +1,9 @@
 package todo.app.todo;
 
+import java.util.Collection;
+
+import javax.validation.groups.Default;
+
 import org.dozer.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,10 +16,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.terasoluna.gfw.common.exception.BusinessException;
-import org.terasoluna.gfw.common.message.ResultMessage;
 import org.terasoluna.gfw.common.message.ResultMessages;
 import org.terasoluna.gfw.web.token.transaction.TransactionTokenCheck;
 import org.terasoluna.gfw.web.token.transaction.TransactionTokenType;
@@ -23,11 +25,6 @@ import org.terasoluna.gfw.web.token.transaction.TransactionTokenType;
 import todo.app.todo.TodoForm.TodoDelete;
 import todo.domain.model.Todo;
 import todo.domain.service.todo.TodoService;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.validation.groups.Default;
-import java.util.Collection;
 
 /**
  * Created by mash on 2015/10/01.
