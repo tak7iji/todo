@@ -1,6 +1,7 @@
 package todo.app.todo;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
@@ -24,6 +25,7 @@ public class TodoForm implements Serializable {
 
     @NotNull(groups = { TodoCreate.class })
     @Size(min = 1, max = 30, groups = { TodoCreate.class })
+    @Pattern(regexp = "^(\\s)*(\\w|=|_)+(\\s)*$")
     private String todoTitle;
 
     public String getTodoId() {
