@@ -4,7 +4,12 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.inject.Inject;
+
 import org.sample.validation.common.annotation.Audit;
+import org.sample.validation.common.annotation.AuditParam;
+import org.sample.validation.common.annotation.NonAuditParam;
+import org.sample.validation.domain.service.calc.CalcService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -20,13 +25,16 @@ public class HelloController {
 
     private static final Logger logger = LoggerFactory
             .getLogger(HelloController.class);
+    
+    @Inject
+    CalcService calcService;
 
     /**
      * Simply selects the home view to render by returning its name.
      */
     @Audit
     @RequestMapping(value = "/", method = {RequestMethod.GET, RequestMethod.POST})
-    public String home(Locale locale, Model model) {
+    public String home(@AuditParam Locale locale, @NonAuditParam Model model) {
         logger.info("Welcome home! The client locale is {}.", locale);
 
         Date date = new Date();
@@ -37,6 +45,7 @@ public class HelloController {
 
         model.addAttribute("serverTime", formattedDate);
 
+        calcService.sum(10, 15);
 //        throw new RuntimeException("foo");
         
         return "welcome/home";
