@@ -8,5 +8,7 @@ public interface CalcService {
 
 	public int sum(int i, int j);
 	
-	public int throwException();
+	public int throwRuntimeException();
+	
+	public int throwBusinessException();
 }

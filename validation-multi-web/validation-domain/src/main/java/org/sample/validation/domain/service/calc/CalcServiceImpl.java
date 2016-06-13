@@ -4,6 +4,8 @@ import org.sample.validation.common.annotation.Audit;
 import org.sample.validation.common.annotation.AuditParam;
 import org.sample.validation.common.annotation.NonAuditParam;
 import org.springframework.stereotype.Service;
+import org.terasoluna.gfw.common.exception.BusinessException;
+import org.terasoluna.gfw.common.message.ResultMessage;
 
 @Service
 public class CalcServiceImpl implements CalcService {
@@ -28,8 +30,13 @@ public class CalcServiceImpl implements CalcService {
 
 	@Audit
 	@Override
-	public int throwException() {
+	public int throwRuntimeException() {
 		throw new RuntimeException("Wow");
 	}
 
+	@Audit
+	@Override
+	public int throwBusinessException() {
+		throw new BusinessException("Throw BusinessException");
+	}
 }
