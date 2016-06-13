@@ -46,6 +46,7 @@ public class HelloController {
         model.addAttribute("serverTime", formattedDate);
 
         calcService.sum(10, 15);
+        calcService.nop();
 //        throw new RuntimeException("foo");
         
         return "welcome/home";

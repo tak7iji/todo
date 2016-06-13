@@ -14,4 +14,10 @@ public class CalcServiceImpl implements CalcService {
 		return i + j;
 	}
 
+	@Audit
+	@Override
+	public int nop() {
+		return 0;
+	}
+
 }
