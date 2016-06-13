@@ -1,26 +1,30 @@
 package org.sample.validation.common.interceptor;
 
-import org.aspectj.lang.ProceedingJoinPoint;
+import org.aopalliance.intercept.MethodInterceptor;
+import org.aopalliance.intercept.MethodInvocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
-public class AuditInterceptor {
+public class AuditInterceptor3 implements MethodInterceptor {
 
     private static final Logger logger = LoggerFactory
-            .getLogger(AuditInterceptor.class);
+            .getLogger(AuditInterceptor3.class);
     
-	public Object auditMethod(ProceedingJoinPoint pjp) throws Throwable {
-		String className = pjp.getTarget().getClass().getSimpleName();
-		String methodName = pjp.getSignature().getName();
-		Object[] args = pjp.getArgs();
+	@Override
+	public Object invoke(MethodInvocation invocation) throws Throwable {
+		Class<?> klass = invocation.getThis().getClass();
+
+		String className = klass.getSimpleName();
+		String methodName = invocation.getMethod().getName();
+		Object[] args = invocation.getArguments();
 		logger.debug("{}[{}] is beeing executed{}", className, methodName, 
 				(args.length > 0) ? " with argument(s): ".concat(StringUtils.arrayToDelimitedString(args, ", ")) : ".");
 		
 		Object returnObj = null;
 		
 		try {
-	        returnObj = pjp.proceed();
+	        returnObj = invocation.proceed();
 		} catch (Throwable t) {
 			logger.debug("{}", t);
 			throw t;
