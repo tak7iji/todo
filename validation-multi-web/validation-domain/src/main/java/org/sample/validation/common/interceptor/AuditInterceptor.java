@@ -22,7 +22,7 @@ public class AuditInterceptor {
 		try {
 	        returnObj = pjp.proceed();
 		} catch (Throwable t) {
-			logger.debug("{}", t);
+			logger.debug("Exception occurred in {}[{}].", className, methodName, t);
 			throw t;
 		}
 

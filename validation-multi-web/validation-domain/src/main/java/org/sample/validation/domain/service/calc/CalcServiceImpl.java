@@ -19,5 +19,17 @@ public class CalcServiceImpl implements CalcService {
 	public int nop() {
 		return 0;
 	}
+	
+	@Audit
+	@Override
+	public int nullArg(String arg) {
+		return 0;
+	}
+
+	@Audit
+	@Override
+	public int throwException() {
+		throw new RuntimeException("Wow");
+	}
 
 }

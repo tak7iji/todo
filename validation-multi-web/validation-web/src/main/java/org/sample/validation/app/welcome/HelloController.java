@@ -47,6 +47,11 @@ public class HelloController {
 
         calcService.sum(10, 15);
         calcService.nop();
+        calcService.nullArg(null);
+        try {
+        	calcService.throwException();
+        } catch (Throwable t) {
+        }
 //        throw new RuntimeException("foo");
         
         return "welcome/home";
