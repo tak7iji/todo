@@ -59,10 +59,14 @@
 	<bean id="auditMethodInvocation"
 		class="org.sample.validation.common.interceptor.AuditInterceptor"/>
 
+<!-- 	<aop:config> -->
+<!-- 		<aop:aspect ref="auditMethodInvocation"> -->
+<!-- 			<aop:pointcut id="audit" expression="@annotation(org.sample.validation.common.annotation.Audit)"/> -->
+<!-- 			<aop:around method="auditMethod" pointcut-ref="audit"/> -->
+<!-- 		</aop:aspect> -->
+<!-- 	</aop:config> -->
 	<aop:config>
-		<aop:aspect ref="auditMethodInvocation">
-			<aop:pointcut id="audit" expression="@annotation(org.sample.validation.common.annotation.Audit)"/>
-			<aop:around method="auditMethod" pointcut-ref="audit"/>
-		</aop:aspect>
+		<aop:advisor advice-ref="auditMethodInvocation" 
+			pointcut="@annotation(org.sample.validation.common.annotation.Audit)"/>
 	</aop:config>
 </beans>
