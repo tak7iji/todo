@@ -57,7 +57,7 @@
     </bean>
 
 	<bean id="auditMethodInvocation"
-		class="org.sample.validation.common.interceptor.AuditInterceptor"/>
+		class="org.sample.validation.common.interceptor.ServiceCallInterceptor"/>
 
 <!-- 	<aop:config> -->
 <!-- 		<aop:aspect ref="auditMethodInvocation"> -->
