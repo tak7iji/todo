@@ -13,6 +13,7 @@ public class CalcServiceImpl implements CalcService {
 	@Audit
 	@Override
 	public int sum(@NonAuditParam int i, @AuditParam int j) {
+		nop();
 		return i + j;
 	}
 
