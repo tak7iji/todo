@@ -15,7 +15,7 @@
         </rollingPolicy>
         <encoder>
             <charset>UTF-8</charset>
-            <pattern><![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tthread:%thread\tMETHOD:%X{METHOD}\tSTATUS:%X{STATUS}\tUSER:%X{USER}\tX-Track:%X{X-Track}\tlevel:%-5level\tlogger:%-48logger{48}\tmessage:%msg%n]]></pattern>
+            <pattern><![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tthread:%thread\tMETHOD:%X{METHOD}\tSTATUS:%X{STATUS}\tX-Track:%X{X-Track}\tlevel:%-5level\tlogger:%-48logger{48}\tmessage:%msg%n]]></pattern>
         </encoder>
     </appender>
 
@@ -41,6 +41,10 @@
             </dataSource>
         </connectionSource>
     </appender>
+    
+    <logger name="org.sample.validation.common.interceptor.ServiceCallInterceptor">
+        <level value="trace" />
+    </logger>
 
     <!-- Application Loggers -->
     <logger name="org.sample.validation">
