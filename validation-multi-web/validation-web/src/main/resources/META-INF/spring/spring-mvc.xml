@@ -125,15 +125,4 @@
             pointcut="execution(* org.springframework.web.servlet.HandlerExceptionResolver.resolveException(..))" />
     </aop:config>
 
-<!-- 	<bean id="auditMethodInvocation" -->
-<!-- 		class="org.sample.validation.common.interceptor.AuditInterceptor"/> -->
-
-<!-- 	<aop:config> -->
-<!-- 		<aop:advisor advice-ref="auditMethodInvocation" -->
-<!-- 			pointcut="@annotation(org.sample.validation.common.annotation.Audit)"/> -->
-<!-- 	</aop:config> -->
-<!-- 	<aop:config> -->
-<!-- 		<aop:advisor advice-ref="auditMethodInvocation" -->
-<!-- 			pointcut="@within(org.springframework.stereotype.Controller)"/> -->
-<!-- 	</aop:config> -->
 </beans>

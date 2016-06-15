@@ -5,7 +5,6 @@ import org.sample.validation.common.annotation.AuditParam;
 import org.sample.validation.common.annotation.NonAuditParam;
 import org.springframework.stereotype.Service;
 import org.terasoluna.gfw.common.exception.BusinessException;
-import org.terasoluna.gfw.common.message.ResultMessage;
 
 @Service
 public class CalcServiceImpl implements CalcService {

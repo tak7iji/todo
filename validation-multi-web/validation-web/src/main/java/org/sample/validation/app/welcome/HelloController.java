@@ -49,14 +49,11 @@ public class HelloController {
         calcService.nop();
         calcService.nullArg(null);
         try {
-        	calcService.throwRuntimeException();
-        } catch (Throwable t) {
-        }
-        try {
         	calcService.throwBusinessException();
         } catch (Throwable t) {
         }
 //        throw new RuntimeException("foo");
+        calcService.throwRuntimeException();
         
         return "welcome/home";
     }

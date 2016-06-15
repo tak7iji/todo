@@ -16,7 +16,7 @@ public class ServiceCallInterceptor implements MethodInterceptor {
         String className = invocation.getThis().getClass().getSimpleName();
         String methodName = invocation.getMethod().getName();
         Object[] args = invocation.getArguments();
-        logger.trace("[START SERVICE] {}.{} {}", className, methodName,
+        logger.trace("[START SERVICE] {}.{}{}", className, methodName,
                 (args.length > 0) ? " with argument(s): ".concat(StringUtils.arrayToDelimitedString(args, ", ")) : ".");
 
         Object returnObj = null;

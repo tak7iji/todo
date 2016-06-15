@@ -42,10 +42,6 @@
         </connectionSource>
     </appender>
     
-    <logger name="org.sample.validation.common.interceptor.ServiceCallInterceptor">
-        <level value="trace" />
-    </logger>
-
     <!-- Application Loggers -->
     <logger name="org.sample.validation">
         <level value="debug" />
@@ -66,6 +62,10 @@
         <appender-ref ref="MONITORING_LOG_FILE" />
         <appender-ref ref="DB" />
     </logger>
+    <logger name="org.sample.validation.common.interceptor.ServiceCallInterceptor">
+        <level value="trace" />
+    </logger>
+
 
     <!-- 3rdparty Loggers -->
     <logger name="org.springframework">
