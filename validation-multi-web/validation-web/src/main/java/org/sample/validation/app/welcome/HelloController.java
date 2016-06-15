@@ -31,10 +31,11 @@ public class HelloController {
 
     /**
      * Simply selects the home view to render by returning its name.
+     * @throws Exception 
      */
     @Audit
     @RequestMapping(value = "/", method = {RequestMethod.GET, RequestMethod.POST})
-    public String home(@AuditParam Locale locale, @NonAuditParam Model model) {
+    public String home(@AuditParam Locale locale, @NonAuditParam Model model) throws Exception {
         logger.info("Welcome home! The client locale is {}.", locale);
 
         Date date = new Date();
@@ -53,7 +54,7 @@ public class HelloController {
         } catch (Throwable t) {
         }
 //        throw new RuntimeException("foo");
-        calcService.throwRuntimeException();
+        calcService.throwException();
         
         return "welcome/home";
     }

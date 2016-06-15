@@ -30,8 +30,8 @@ public class CalcServiceImpl implements CalcService {
 
 	@Audit
 	@Override
-	public int throwRuntimeException() {
-		throw new RuntimeException("Wow");
+	public int throwException() throws Exception {
+		throw new Exception("Wow");
 	}
 
 	@Audit
